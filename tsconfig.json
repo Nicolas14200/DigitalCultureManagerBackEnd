@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+      "rootDir": "src",
+      "outDir": "dist",
+      "types": ["node", "jest"],
+      "baseUrl": "./src",
+      "esModuleInterop": true,
+      "emitDecoratorMetadata": true,
+      "experimentalDecorators": true,
+      "module" : "CommonJS",
+      "target": "ESNext",
+      "resolveJsonModule": true
+  },
+  "exclude": ["node_modules", "src/**/*.test.ts", "jest.config.ts"]
+}
