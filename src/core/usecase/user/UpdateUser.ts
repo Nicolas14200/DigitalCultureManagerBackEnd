@@ -1,16 +1,18 @@
-import { Identity } from "../../../core/domain/valueObjects/Identitty";
 import { User } from "../../../core/domain/entities/User";
 import { Usecase } from "../Usecase";
-import { inject } from "inversify";
+import { inject, injectable } from "inversify";
 import { DCMIdentifiers } from "../DCMIdentifiers";
 import { UserRepository } from "../../../core/domain/repositories/UserRepository";
 import { PasswordGateway } from "../../../core/domain/gateways/PasswordGateway";
 import { Password } from "../../../core/domain/valueObjects/Password";
+
 export interface UpdateUserProps {
     id: string;
     name:string;
     password:string;
 }
+
+@injectable()
 export class UpdateUser implements Usecase<UpdateUserProps, User>{
     constructor(
         @inject(DCMIdentifiers.userRepository)

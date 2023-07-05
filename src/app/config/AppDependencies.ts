@@ -5,6 +5,7 @@ import { DCMIdentifiers } from "../../core/usecase/DCMIdentifiers";
 import { CreateUser } from "../../core/usecase/user/CreateUser";
 import { Container } from "inversify";
 import admin from "firebase-admin";
+import { UpdateUser } from "../../core/usecase/user/UpdateUser";
 const serviceAccount = require("./digital-culture-manager-firebase-adminsdk-ajq5q-3f4899c476.json")
 
 export class AppDependencies extends Container {
@@ -15,6 +16,7 @@ export class AppDependencies extends Container {
         this.bind(DCMIdentifiers.userRepository).toConstantValue(new MongoDbUserRepository())
         this.bind(DCMIdentifiers.passwordGateway).toConstantValue(new BcryptPasswordGateway())
         this.bind(CreateUser).toSelf()
+        this.bind(UpdateUser).toSelf()
         this.bind(UserController).toSelf()
         return this;
     }
