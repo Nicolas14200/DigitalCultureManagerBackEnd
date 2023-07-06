@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
-import { User } from "../../core/domain/entities/User";
 import { Role } from "../../core/domain/valueObjects/Role";
-import { MongoDbUserRepository } from "../repositories/MongoDbUserRepository"
 import { v4 } from "uuid";
+import { User } from "../../core/domain/entities/user/User";
+import { MongoDbUserRepository } from "../repositories/mongoDb/MongoDbUserRepository"
 describe('Integration - MongoDbUserRepository', () => {
     let userRepo : MongoDbUserRepository;
     let user : User;
@@ -16,7 +16,7 @@ describe('Integration - MongoDbUserRepository', () => {
             role:Role.admin,
         })
     })
-    it("should save a user in a mnogodb repository", async () => {
+    it("should save a user in a mongodb repository", async () => {
         await userRepo.save(user);
         const userExist: User = await userRepo.getById(user.userProperty.id)
         expect(userExist.userProperty.name).toEqual("Ban")

@@ -1,4 +1,4 @@
-import { User } from "core/domain/entities/User";
+import { User } from "core/domain/entities/user/User";
 import { UserRepository } from "core/domain/repositories/UserRepository";
 import {Storage} from '@google-cloud/storage';
 

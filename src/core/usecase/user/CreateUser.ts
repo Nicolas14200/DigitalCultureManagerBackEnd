@@ -1,5 +1,5 @@
 import { inject, injectable } from "inversify";
-import { User, UserProps } from "../../domain/entities/User";
+import { User, UserProps } from "../../domain/entities/user/User";
 import { PasswordGateway } from "../../domain/gateways/PasswordGateway";
 import { UserRepository } from "../../domain/repositories/UserRepository";
 import { Identity } from "../../domain/valueObjects/Identitty";
@@ -7,12 +7,14 @@ import { Password } from "../../domain/valueObjects/Password";
 import { Role } from "../../domain/valueObjects/Role";
 import { Usecase } from "../Usecase";
 import { DCMIdentifiers } from "../DCMIdentifiers";
+
 export interface CreateUserProps  {
     name:string;
     email:string;
     password:string;
     role:Role;
 }
+
 @injectable()
 export class CreateUser implements Usecase<CreateUserProps, User>{
     constructor(

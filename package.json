@@ -4,7 +4,8 @@
   "description": "Digital culture manager",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "ts-node src/index.ts",
+    "test": "npx jest --runInBand"
   },
   "author": "Heutte Nicolas",
   "license": "ISC",

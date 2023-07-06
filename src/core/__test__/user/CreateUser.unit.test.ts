@@ -1,9 +1,9 @@
 import 'reflect-metadata';
 import { BcryptPasswordGateway } from "../../../adapters/gateways/bcrypt/BcryptPasswordGateway";
-import { User } from "../../domain/entities/User";
 import { Role } from "../../domain/valueObjects/Role";
 import { CreateUser } from "../../usecase/user/CreateUser";
 import { InMemoryUserRepository } from "../adapters/inMemory/InMemoryUserRepository"
+import { User } from '../../domain/entities/user/User';
 
 describe("Unit - CreateUser", () => {
     let userRepo : InMemoryUserRepository;

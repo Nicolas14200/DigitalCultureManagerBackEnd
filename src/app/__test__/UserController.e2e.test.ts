@@ -5,7 +5,7 @@ import request from "supertest";
 import express from "express";
 import { configureExpress } from "../config/configureExpress"
 import { CreateUser } from "../../core/usecase/user/CreateUser";
-import { User } from '../../core/domain/entities/User';
+import { User } from '../../core/domain/entities/user/User';
 import { MongoDbUserRepository } from '../../adapters/repositories/mongoDb/MongoDbUserRepository';
 import { Role } from '../../core/domain/valueObjects/Role';
 import { UpdateUser } from '../../core/usecase/user/UpdateUser';

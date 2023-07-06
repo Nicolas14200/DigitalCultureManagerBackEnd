@@ -1,5 +1,5 @@
 import { Mapper } from "../../../../core/domain/Mapper";
-import { User } from "../../../../core/domain/entities/User";
+import { User } from "../../../../core/domain/entities/user/User";
 import { UserResponse } from "../../../../core/domain/entities/apiResponse/UserResponse";
 
 export class UserApiResponseMapper implements Mapper< User, UserResponse > {

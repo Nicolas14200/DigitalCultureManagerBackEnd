@@ -1,4 +1,4 @@
-import { User } from "../../../core/domain/entities/User";
+import { User } from "../../domain/entities/user/User";
 import { Usecase } from "../Usecase";
 import { inject, injectable } from "inversify";
 import { DCMIdentifiers } from "../DCMIdentifiers";

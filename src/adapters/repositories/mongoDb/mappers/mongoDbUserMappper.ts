@@ -1,6 +1,6 @@
 import { Mapper } from "../../../../core/domain/Mapper";
 import { Role } from "../../../../core/domain/valueObjects/Role";
-import { User } from "../../../../core/domain/entities/User";
+import { User } from "../../../../core/domain/entities/user/User";
 
 export interface MongoDbUserMappperProps {
     name: string;

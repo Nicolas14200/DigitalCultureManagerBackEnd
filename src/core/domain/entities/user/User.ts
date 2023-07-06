@@ -1,6 +1,6 @@
-import { UpdateUserProps } from "../../../core/usecase/user/UpdateUser";
-import { Email } from "../valueObjects/Email";
-import { Role } from "../valueObjects/Role";
+import { UpdateUserProps } from "../../../usecase/user/UpdateUser";
+import { Email } from "../../valueObjects/Email";
+import { Role } from "../../valueObjects/Role";
 import { v4 } from 'uuid';
 
 export interface UserProps {
