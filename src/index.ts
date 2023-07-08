@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import express from "express";
 import mongoose from 'mongoose';
-import { configureExpress } from 'app/config/configureExpress';
+import { configureExpress } from './app/config/configureExpress';
 
 const PORT = 3000;
 

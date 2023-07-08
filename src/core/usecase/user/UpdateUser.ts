@@ -5,6 +5,7 @@ import { DCMIdentifiers } from "../DCMIdentifiers";
 import { UserRepository } from "../../../core/domain/repositories/UserRepository";
 import { PasswordGateway } from "../../../core/domain/gateways/PasswordGateway";
 import { Password } from "../../../core/domain/valueObjects/Password";
+import { Identity } from "../../../core/domain/valueObjects/Identitty";
 
 export interface UpdateUserProps {
     id: string;
@@ -32,5 +33,11 @@ export class UpdateUser implements Usecase<UpdateUserProps, User>{
         this.userRepository.save(user);
         return user
     }
+    async canExecute(identity: Identity): Promise<boolean> {
+        if (identity.role === "ADMIN") {
+            return true;
+        }
+        return false;
+    } 
 
 }

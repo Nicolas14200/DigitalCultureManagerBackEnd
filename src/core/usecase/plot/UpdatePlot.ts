@@ -1,0 +1,40 @@
+import { PlotRepository } from "core/domain/repositories/PlotRepository";
+import { Usecase } from "../Usecase";
+import { Plot } from "core/domain/entities/plot/Plot";
+import { Identity } from "core/domain/valueObjects/Identitty";
+import { StarsLevel } from "core/domain/valueObjects/StarsLevel";
+
+export interface UpdatePlotProps {
+    id: string;
+    name?: string;
+    codeName?: string;
+    ph?: number;
+    pebbles?: StarsLevel;
+    plank?: number;
+}
+
+export class UpdatePlot implements Usecase <UpdatePlotProps, Plot> {
+
+    constructor(private readonly plotRepository: PlotRepository){}
+
+    async execute(payload: UpdatePlotProps): Promise<Plot> {
+        const plot = await this.plotRepository.getById(payload.id)
+        plot.update({
+            name:payload.name,
+            codeName:payload.codeName,
+            pebbles:payload.pebbles,
+            ph:payload.ph,
+            plank:payload.plank,
+        })
+       await this.plotRepository.save(plot);
+       return plot;
+    }
+    
+    async canExecute(identity: Identity): Promise<boolean> {
+        if (identity.role === "ADMIN") {
+            return true;
+        }
+        return false;
+    }
+    
+}

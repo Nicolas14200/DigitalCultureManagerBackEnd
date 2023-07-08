@@ -8,6 +8,8 @@ import admin from "firebase-admin";
 import { UpdateUser } from "../../core/usecase/user/UpdateUser";
 import { PlotController } from "../../app/modules/plot/PlotController";
 import { CreatePlot } from "../../core/usecase/plot/CreatePlot";
+import { GetUserById } from "../../core/usecase/user/GetUserById";
+import { DeleteUser } from "../../core/usecase/user/DeleteUser";
 const serviceAccount = require("./digital-culture-manager-firebase-adminsdk-ajq5q-3f4899c476.json")
 
 export class AppDependencies extends Container {
@@ -22,6 +24,8 @@ export class AppDependencies extends Container {
         this.bind(UserController).toSelf()
         this.bind(PlotController).toSelf()
         this.bind(CreatePlot).toSelf()
+        this.bind(GetUserById).toSelf()
+        this.bind(DeleteUser).toSelf()
         return this;
     }
 }

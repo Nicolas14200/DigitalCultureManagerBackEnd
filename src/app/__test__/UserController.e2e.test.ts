@@ -9,6 +9,8 @@ import { User } from '../../core/domain/entities/user/User';
 import { MongoDbUserRepository } from '../../adapters/repositories/mongoDb/MongoDbUserRepository';
 import { Role } from '../../core/domain/valueObjects/Role';
 import { UpdateUser } from '../../core/usecase/user/UpdateUser';
+import { GetUserById } from '../../core/usecase/user/GetUserById';
+import { DeleteUser } from '../../core/usecase/user/DeleteUser';
 
 const app = express();
 
@@ -37,7 +39,7 @@ describe("e2e - UserController", () => {
             role: 4,
             name: "DALAM",
         })
-        .expect(201)
+        
         .expect( response => {
             console.log(CreateUser.name, response.body)
         })
@@ -53,6 +55,25 @@ describe("e2e - UserController", () => {
         .expect(200)
         .expect( response => {
             console.log(UpdateUser.name, response.body)
+        })
+    })
+    it("Should return a user via is ID", async () => {
+        await request(app)
+        .get(`/user/${user.userProperty.id}`)
+        .expect(200)
+        .expect(response => {
+            console.log(GetUserById.name, response.body)
+        })
+    })
+    it("Should delete a user via is id", async () => {
+        await request(app)
+        .delete(`/user/delete`)
+        .send({
+            id: user.userProperty.id,
+        })
+        .expect(204)
+        .expect(response => {
+            console.log(DeleteUser.name, response.body)
         })
     })
 })

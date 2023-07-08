@@ -31,7 +31,7 @@ export class PlotController {
         plank: cmd.plank,
       };
       console.log(cmd)
-      const user = await this._createPlot.execute(payload);
+      const user = this._createPlot.execute(payload);
       
       return response.status(201).send({
         ...this.userApiResponseMapper.fromDomain(user),

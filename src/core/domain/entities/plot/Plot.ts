@@ -21,6 +21,7 @@ export interface PlotProps {
 export class Plot {
 
     constructor( readonly plotProps : PlotProps){}
+    
     static create (props: {
         name: string;
         codeName: string;
