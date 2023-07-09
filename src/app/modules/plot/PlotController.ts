@@ -1,21 +1,24 @@
 import { CreatePlot, CreatePlotProps } from "../../../core/usecase/plot/CreatePlot";
 import { injectable } from "inversify";
-import { Body, JsonController, Post, Req, Res } from "routing-controllers";
+import { Body, JsonController, Post, Put, Req, Res } from "routing-controllers";
 import { CreatePlotCommand } from "./commands/CreatePlotCommand";
 import { PlotApiResponseMapper } from "./dto/PlotApiResponseMapper";
 import { Request, Response } from "express";
+import { UpdatePlotCommand } from "./commands/UpdatePlotCommand";
+import { UpdatePlot } from "../../../core/usecase/plot/UpdatePlot";
 
 @JsonController("/plot")
 @injectable()
 export class PlotController {
-  private userApiResponseMapper: PlotApiResponseMapper =
+  private plotApiResponseMapper: PlotApiResponseMapper =
   new PlotApiResponseMapper();
   constructor(
     private readonly _createPlot: CreatePlot,
+    private readonly _updatePlot: UpdatePlot
   ) {}
 
   @Post("/create")
-  async createUser(
+  async createPlot(
     @Req() request: Request,
     @Res() response: Response,
     @Body() cmd: CreatePlotCommand
@@ -30,13 +33,36 @@ export class PlotController {
         pebbles: cmd.pebbles,
         plank: cmd.plank,
       };
-      console.log(cmd)
-      const user = this._createPlot.execute(payload);
       
+      const plot = await this._createPlot.execute(payload);
       return response.status(201).send({
-        ...this.userApiResponseMapper.fromDomain(user),
+        ...this.plotApiResponseMapper.fromDomain(plot),
       });
     } catch (e) {
+      return response.status(400).send({
+        message: e.message,
+      });
+    }
+  }
+  @Put("/")
+  async updatePlot(
+    @Res() response: Response,
+    @Body() cmd: UpdatePlotCommand
+  ){
+    try{
+      const plot = await this._updatePlot.execute({
+        id: cmd.id,
+        codeName: cmd.codeName,
+        name: cmd.name,
+        pebbles: cmd.pebbles,
+        ph: cmd.ph,
+        plank: cmd.plank,
+      })
+      return response.status(201).send({
+        ...this.plotApiResponseMapper.fromDomain(plot),
+      });
+    }
+    catch(e){
       return response.status(400).send({
         message: e.message,
       });

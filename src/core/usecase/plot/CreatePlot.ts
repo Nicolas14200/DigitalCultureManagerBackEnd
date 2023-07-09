@@ -3,7 +3,8 @@ import { Usecase } from "../Usecase";
 import { Plot } from "../../../core/domain/entities/plot/Plot";
 import { Identity } from "../../../core/domain/valueObjects/Identitty";
 import { PlotRepository } from "../../../core/domain/repositories/PlotRepository";
-import { injectable } from "inversify";
+import { inject, injectable } from "inversify";
+import { DCMIdentifiers } from "../DCMIdentifiers";
 
 export interface CreatePlotProps {
     name: string;
@@ -17,9 +18,12 @@ export interface CreatePlotProps {
 @injectable()
 export class CreatePlot implements Usecase<CreatePlotProps, Plot> {
 
-    constructor(private readonly _plotRepository : PlotRepository){}
+    constructor(
+        @inject(DCMIdentifiers.plotRepository)
+        private readonly _plotRepository : PlotRepository
+        ){}
 
-    execute(payload: CreatePlotProps): Plot {
+    async execute(payload: CreatePlotProps): Promise<Plot> {
         const plot =  Plot.create({
             name: payload.name,
             codeName: payload.codeName,
@@ -29,7 +33,7 @@ export class CreatePlot implements Usecase<CreatePlotProps, Plot> {
             pebbles: payload.pebbles,
             plank: payload.plank,
         })
-        this._plotRepository.save(plot)
+        await this._plotRepository.save(plot)
         return plot;
     }
 

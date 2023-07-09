@@ -39,7 +39,7 @@ describe("e2e - UserController", () => {
             role: 4,
             name: "DALAM",
         })
-        
+        .expect(201)
         .expect( response => {
             console.log(CreateUser.name, response.body)
         })

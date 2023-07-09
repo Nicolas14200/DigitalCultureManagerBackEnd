@@ -12,7 +12,7 @@ describe("Unit - createPlot", () => {
         createPlot = new CreatePlot(plotRepo);
     })
     it("Should create a plot and save him in in memory", async () => {
-        const plot = createPlot.execute({
+        const plot = await createPlot.execute({
             name: "Parcelle 0001",
             codeName: "code alpha romero bétasoid",
             heigth: 10,
@@ -22,6 +22,27 @@ describe("Unit - createPlot", () => {
             plank: 50,
         })
         const plotExist: Plot = await plotRepo.getById(plot.plotProps.id);
-        expect(plotExist.plotProps.name).toEqual("Parcelle 0001")
+        expect(plotExist.plotProps.name).toEqual("Parcelle 0001");
+    })
+    it ("Should return an error if plot exist", async () => {
+        await createPlot.execute({
+            name: "Parcelle 0002",
+            codeName: "azerty",
+            heigth: 10,
+            width: 5,
+            pebbles: 1,
+            ph: 1,
+            plank: 50,
+        })
+        const plot = createPlot.execute({
+            name: "Parcelle 0003",
+            codeName: "azerty",
+            heigth: 10,
+            width: 5,
+            pebbles: 1,
+            ph: 1,
+            plank: 50,
+        })
+        expect(plot).rejects.toThrow("PLOT_EXIST");
     })
 })

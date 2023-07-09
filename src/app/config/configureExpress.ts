@@ -3,10 +3,11 @@ import express, { Application } from "express";
 import { useContainer, useExpressServer } from "routing-controllers";
 import { UserController } from "../../app/modules/users/UserController";
 import { AppDependencies } from "./AppDependencies";
+import { PlotController } from "../../app/modules/plot/PlotController";
 
 export function configureExpress(app: Application) {
     
-    const routes = [UserController];
+    const routes = [UserController, PlotController];
 
     const container = new AppDependencies().init();
     

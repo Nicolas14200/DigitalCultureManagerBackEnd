@@ -1,8 +1,10 @@
-import { PlotRepository } from "core/domain/repositories/PlotRepository";
+import { PlotRepository } from "../../../core/domain/repositories/PlotRepository";
 import { Usecase } from "../Usecase";
-import { Plot } from "core/domain/entities/plot/Plot";
-import { Identity } from "core/domain/valueObjects/Identitty";
-import { StarsLevel } from "core/domain/valueObjects/StarsLevel";
+import { Plot } from "../../../core/domain/entities/plot/Plot";
+import { Identity } from "../../../core/domain/valueObjects/Identitty";
+import { StarsLevel } from "../../../core/domain/valueObjects/StarsLevel";
+import { inject, injectable } from "inversify";
+import { DCMIdentifiers } from "../DCMIdentifiers";
 
 export interface UpdatePlotProps {
     id: string;
@@ -13,9 +15,13 @@ export interface UpdatePlotProps {
     plank?: number;
 }
 
+@injectable()
 export class UpdatePlot implements Usecase <UpdatePlotProps, Plot> {
 
-    constructor(private readonly plotRepository: PlotRepository){}
+    constructor(
+        @inject(DCMIdentifiers.plotRepository)
+        private readonly plotRepository: PlotRepository
+        ){}
 
     async execute(payload: UpdatePlotProps): Promise<Plot> {
         const plot = await this.plotRepository.getById(payload.id)
@@ -26,7 +32,7 @@ export class UpdatePlot implements Usecase <UpdatePlotProps, Plot> {
             ph:payload.ph,
             plank:payload.plank,
         })
-       await this.plotRepository.save(plot);
+       this.plotRepository.update(plot);
        return plot;
     }
     

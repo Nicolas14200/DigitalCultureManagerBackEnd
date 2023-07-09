@@ -10,6 +10,8 @@ import { PlotController } from "../../app/modules/plot/PlotController";
 import { CreatePlot } from "../../core/usecase/plot/CreatePlot";
 import { GetUserById } from "../../core/usecase/user/GetUserById";
 import { DeleteUser } from "../../core/usecase/user/DeleteUser";
+import { UpdatePlot } from "../../core/usecase/plot/UpdatePlot";
+import { MongoDbPlotRepository } from "../../adapters/repositories/mongoDb/MongoDbPlotRepository";
 const serviceAccount = require("./digital-culture-manager-firebase-adminsdk-ajq5q-3f4899c476.json")
 
 export class AppDependencies extends Container {
@@ -19,6 +21,7 @@ export class AppDependencies extends Container {
             });
         this.bind(DCMIdentifiers.userRepository).toConstantValue(new MongoDbUserRepository())
         this.bind(DCMIdentifiers.passwordGateway).toConstantValue(new BcryptPasswordGateway())
+        this.bind(DCMIdentifiers.plotRepository).toConstantValue(new MongoDbPlotRepository())
         this.bind(CreateUser).toSelf()
         this.bind(UpdateUser).toSelf()
         this.bind(UserController).toSelf()
@@ -26,6 +29,7 @@ export class AppDependencies extends Container {
         this.bind(CreatePlot).toSelf()
         this.bind(GetUserById).toSelf()
         this.bind(DeleteUser).toSelf()
+        this.bind(UpdatePlot).toSelf()
         return this;
     }
 }

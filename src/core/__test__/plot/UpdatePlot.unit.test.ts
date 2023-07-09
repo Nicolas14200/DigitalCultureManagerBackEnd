@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { InMemoryPlotRepository } from "../adapters/inMemory/InMemoryPlotRepository";
 import { Plot } from "../../domain/entities/plot/Plot";
 import { UpdatePlot } from "../../usecase/plot/UpdatePlot"

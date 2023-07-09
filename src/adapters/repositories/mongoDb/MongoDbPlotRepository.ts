@@ -38,11 +38,20 @@ export class MongoDbPlotRepository implements PlotRepository {
     }
     
     async getById(id: string): Promise<Plot> {
-        const result: MongoDbPlotMapperProps = await PlotModel.findOne({
+        const plot: MongoDbPlotMapperProps = await PlotModel.findOne({
             id: id
         });
-        if (result){
-            return this.mongoDbPlotMapper.toDomain(result);
+        if (plot){
+            return this.mongoDbPlotMapper.toDomain(plot);
+        }
+    }
+
+    async getByCodeName(codeName: string): Promise<Plot> {
+        const plot: MongoDbPlotMapperProps = await PlotModel.findOne({
+            codeName: codeName
+        });
+        if (plot){
+            return this.mongoDbPlotMapper.toDomain(plot);
         }
     }
 }
