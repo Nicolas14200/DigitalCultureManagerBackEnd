@@ -5,17 +5,17 @@ import { Plot } from "../../../../core/domain/entities/plot/Plot";
 export class PlotApiResponseMapper implements Mapper<Plot, PlotResponse>{
     fromDomain(plot: Plot): PlotResponse {
         return {
-            name: plot.plotProps.name,
-            codeName: plot.plotProps.codeName,
-            width: plot.plotProps.width,
-            heigth: plot.plotProps.heigth,
-            area: plot.plotProps.area,
-            ph: plot.plotProps.ph,
-            pebbles: plot.plotProps.pebbles,
-            plank: plot.plotProps.plank,
-            series: plot.plotProps.series,
-            subPlot: plot.plotProps.subPlot,
-            eventCulture: plot.plotProps.eventCulture
+            name: plot.props.name,
+            codeName: plot.props.codeName,
+            width: plot.props.width,
+            heigth: plot.props.heigth,
+            area: plot.props.area,
+            ph: plot.props.ph,
+            pebbles: plot.props.pebbles,
+            plank: plot.props.plank,
+            series: plot.props.series,
+            subPlot: plot.props.subPlot,
+            eventCulture: plot.props.eventCulture
         }
     }
 }

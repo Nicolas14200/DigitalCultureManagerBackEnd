@@ -1,7 +1,7 @@
 import { EventCultureRepository } from "../../../core/domain/repositories/EventCultureRepository";
 import { MongoDbEventCultureMapper, MongoDbEventCultureMapperProps } from "./mappers/MongoDbEventCultureMapper";
 import { EventCultureModel } from "./models/EventCultureModel";
-import { EventCulture } from "../../../core/domain/entities/event/EventCulture";
+import { EventCulture } from "../../../core/domain/entities/eventCulture/EventCulture";
 
 export class MongoDbEventCultureRepository implements EventCultureRepository {
 
@@ -10,14 +10,14 @@ export class MongoDbEventCultureRepository implements EventCultureRepository {
     async save(eventCulture: EventCulture): Promise<EventCulture> {
         await EventCultureModel.findOneAndUpdate(
             {
-                id: eventCulture.eventProps.id
+                id: eventCulture.props.id
             },
             {
                 $set: {
-                    id: eventCulture.eventProps.id,
-                    date: eventCulture.eventProps.date,
-                    note: eventCulture.eventProps.note,
-                    plotId: eventCulture.eventProps.plotId
+                    id: eventCulture.props.id,
+                    date: eventCulture.props.date,
+                    note: eventCulture.props.note,
+                    plotId: eventCulture.props.plotId
                 }
             },
             {

@@ -12,9 +12,9 @@ export interface UserProps {
 }
 
 export class User {
-    userProperty: UserProps
-    constructor(userProperty: UserProps){
-        this.userProperty = userProperty
+    props: UserProps
+    constructor(props: UserProps){
+        this.props = props
     }
 
     static create(props: {
@@ -33,7 +33,7 @@ export class User {
         })
     }
     update(payload: UpdateUserProps ){
-        this.userProperty.name = payload.name,
-        this.userProperty.password = payload.password
+        this.props.name = payload.name,
+        this.props.password = payload.password
     }
 }

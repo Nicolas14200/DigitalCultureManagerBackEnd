@@ -9,6 +9,8 @@ import request from "supertest";
 import { CreatePlot } from "../../core/usecase/plot/CreatePlot";
 import { v4 } from "uuid";
 import { UpdatePlot } from "../../core/usecase/plot/UpdatePlot";
+import { GetPlotById } from '../../core/usecase/plot/GetPlotById';
+import { DeletePlot } from '../../core/usecase/plot/DeletePlot';
 
 const app = express();
 
@@ -32,7 +34,7 @@ describe("e2e - PlotController", () => {
         await plotRepo.save(plot)
     });
 
-    it("Should create a plot and save in mongoDb", async () => {
+    it("Should return 201", async () => {
         await request(app)
         .post("/plot/create")
         .send({
@@ -46,24 +48,48 @@ describe("e2e - PlotController", () => {
         })
         .expect(201)
         .expect( response => {
-            console.log(CreatePlot.name, response.error)
+            console.log(CreatePlot.name, response.body)
         });
     });
 
-    it("Should update a plot", async () => {
+    it("Should return 201", async () => {
         await request(app)
         .put("/plot/")
         .send({
-            id: plot.plotProps.id,
+            id: plot.props.id,
             codeName: "AZERTY666",
             name: "NEW_NAME",
-            pebbles: plot.plotProps.pebbles,
-            ph: plot.plotProps.ph,
-            plank: plot.plotProps.plank,
+            pebbles: plot.props.pebbles,
+            ph: plot.props.ph,
+            plank: plot.props.plank,
         })
-        
+        .expect(201)
         .expect( response => {
             console.log(UpdatePlot.name, response.body)
         });
     });
+    
+    it("Should return 200 and a plot via is Id", async () => {
+        await request(app)
+        .get(`/plot/${plot.props.id}`)
+        .send({
+            id: plot.props.id
+        })
+        .expect(200)
+        .expect( response => {
+            console.log(GetPlotById.name, response.body)
+        });
+    })
+
+    it("Should delete a plot", async () => {
+        await request(app)
+        .delete("/plot/")
+        .send({
+            id: plot.props.id
+        })
+        .expect(200)
+        .expect( response => {
+            console.log(DeletePlot.name, response.body)
+        });
+    })
 })

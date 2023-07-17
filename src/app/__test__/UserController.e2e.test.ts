@@ -48,7 +48,7 @@ describe("e2e - UserController", () => {
         await request(app)
         .put("/user/")
         .send({
-            id: user.userProperty.id,
+            id: user.props.id,
             password: "Passworchanged123456789",
             name: "ELO",
         })
@@ -59,7 +59,7 @@ describe("e2e - UserController", () => {
     })
     it("Should return a user via is ID", async () => {
         await request(app)
-        .get(`/user/${user.userProperty.id}`)
+        .get(`/user/${user.props.id}`)
         .expect(200)
         .expect(response => {
             console.log(GetUserById.name, response.body)
@@ -69,7 +69,7 @@ describe("e2e - UserController", () => {
         await request(app)
         .delete(`/user/delete`)
         .send({
-            id: user.userProperty.id,
+            id: user.props.id,
         })
         .expect(204)
         .expect(response => {

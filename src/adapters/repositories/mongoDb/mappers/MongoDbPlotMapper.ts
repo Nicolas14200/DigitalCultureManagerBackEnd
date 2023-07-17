@@ -1,5 +1,5 @@
 import { Mapper } from "core/domain/Mapper";
-import { EventCulture } from "../../../../core/domain/entities/event/EventCulture";
+import { EventCulture } from "../../../../core/domain/entities/eventCulture/EventCulture";
 import { Plot } from "../../../../core/domain/entities/plot/Plot";
 import { Series } from "../../../../core/domain/valueObjects/Series";
 import { StarsLevel } from "../../../../core/domain/valueObjects/StarsLevel";

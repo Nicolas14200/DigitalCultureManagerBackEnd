@@ -8,6 +8,7 @@ import { UpdateUserCommand } from "./commands/UpdateUserCommand";
 import { UpdateUser } from "../../../core/usecase/user/UpdateUser";
 import { GetUserById } from "../../../core/usecase/user/GetUserById";
 import { DeleteUser } from "../../../core/usecase/user/DeleteUser";
+import { DeleteUserCommand } from "./commands/DeleteUserCommand";
 
 @JsonController("/user")
 @injectable()
@@ -66,6 +67,7 @@ export class UserController {
       });
     }
   }
+  
   @Get("/:id")
   async getUserById(   
     @Req() request: Request, 
@@ -83,13 +85,13 @@ export class UserController {
       });
     }
   }
-  @Delete("/delete")
+  @Delete("/")
   async deleteUser(
-    @Req() request: Request, 
+    @Body() cmd: DeleteUserCommand, 
     @Res() response: Response,
   ){
     try{
-      await this._deleteUser.execute(request.body.id);
+      await this._deleteUser.execute(cmd.id);
       return response.sendStatus(204);
     }
     catch(e){

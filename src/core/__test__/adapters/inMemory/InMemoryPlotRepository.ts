@@ -13,19 +13,18 @@ export class InMemoryPlotRepository implements PlotRepository {
                 throw new PlotError.GetByIdFailed("PLOT_NOT_FOUND")
               }
             return this.plotMap.get(id);
-    
     }
 
     async save(plot: Plot): Promise<Plot> {
         try{
-        const plotdebug = await this.getByCodeName(plot.plotProps.codeName);
+        const plotdebug = await this.getByCodeName(plot.props.codeName);
         console.log(plotdebug)
         throw new PlotError.PlotExist("PLOT_EXIST");
         }
         catch(e){
             if(e.message === "PLOT_NOT_FOUND"){
                 console.log(e)
-                this.plotMap.set(plot.plotProps.id, plot);
+                this.plotMap.set(plot.props.id, plot);
                 return plot;
             }
             throw e;
@@ -33,20 +32,25 @@ export class InMemoryPlotRepository implements PlotRepository {
     }
 
     async update(plot: Plot): Promise<Plot> { 
-        const plotExist = this.plotMap.set(plot.plotProps.id, plot);
+        const plotExist = this.plotMap.set(plot.props.id, plot);
         if(!plotExist){
             throw new PlotError.GetByCodeNameFailed("PLOT_NOT_FOUND")
         }
-        return this.plotMap.get(plot.plotProps.id);
+        return this.plotMap.get(plot.props.id);
     }
 
     async getByCodeName(codeName: string): Promise<Plot> {
         for (let [id, plot] of this.plotMap){
-            if (plot.plotProps.codeName === codeName){
+            if (plot.props.codeName === codeName){
                 return this.plotMap.get(id);
             }
         }
         throw new PlotError.GetByCodeNameFailed("PLOT_NOT_FOUND")
+    }
+
+    async delete(id: string): Promise<void> {
+        this.plotMap.delete(id);
+        return;
     }
 
 }

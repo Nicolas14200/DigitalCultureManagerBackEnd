@@ -3,7 +3,9 @@ import { UserRepository } from "core/domain/repositories/UserRepository";
 import {Storage} from '@google-cloud/storage';
 
 export class firebaseStorageRepository implements UserRepository {
-
+    delete(id: string): Promise<void> {
+        throw new Error("Method not implemented.");
+    }
     save(user: User): Promise<User> {
         throw new Error("Method not implemented.");
     }

@@ -21,8 +21,8 @@ describe("Unit - createPlot", () => {
             ph: 1,
             plank: 50,
         })
-        const plotExist: Plot = await plotRepo.getById(plot.plotProps.id);
-        expect(plotExist.plotProps.name).toEqual("Parcelle 0001");
+        const plotExist: Plot = await plotRepo.getById(plot.props.id);
+        expect(plotExist.props.name).toEqual("Parcelle 0001");
     })
     it ("Should return an error if plot exist", async () => {
         await createPlot.execute({

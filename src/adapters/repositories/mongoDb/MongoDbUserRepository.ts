@@ -11,15 +11,15 @@ export class MongoDbUserRepository implements UserRepository {
     async save(user: User): Promise<User> {
         await UserModel.findOneAndUpdate(
             {
-                id: user.userProperty.id
+                id: user.props.id
             },
             {
                 $set: {
-                    email: user.userProperty.email,
-                    id: user.userProperty.id,
-                    name: user.userProperty.name,
-                    password: user.userProperty.password,
-                    role: user.userProperty.role,
+                    email: user.props.email,
+                    id: user.props.id,
+                    name: user.props.name,
+                    password: user.props.password,
+                    role: user.props.role,
                 }
             },
             {

@@ -1,6 +1,6 @@
 import { Series } from "../../../../core/domain/valueObjects/Series";
 import { StarsLevel } from "../../../../core/domain/valueObjects/StarsLevel";
-import { EventCulture } from "../event/EventCulture";
+import { EventCulture } from "../eventCulture/EventCulture";
 import { v4 } from "uuid";
 
 export interface PlotProps {
@@ -20,7 +20,7 @@ export interface PlotProps {
 
 export class Plot {
 
-    constructor( readonly plotProps : PlotProps){}
+    constructor( readonly props : PlotProps){}
     
     static create (props: {
         name: string;
@@ -47,11 +47,15 @@ export class Plot {
         ph: number;
         pebbles: StarsLevel;
         plank: number;
+        width: number;
+        heigth: number;
     }){
-        this.plotProps.name = props.name,
-        this.plotProps.codeName = props.codeName,
-        this.plotProps.ph = props.ph,
-        this.plotProps.pebbles = props.pebbles,
-        this.plotProps.plank = props.plank
+        this.props.name = props.name,
+        this.props.codeName = props.codeName,
+        this.props.ph = props.ph,
+        this.props.pebbles = props.pebbles,
+        this.props.plank = props.plank,
+        this.props.width = props.width,
+        this.props.heigth = props.heigth
     }
 }

@@ -8,7 +8,7 @@ export interface EventCultureProps {
 }
 
 export class EventCulture {
-    constructor( readonly eventProps: EventCultureProps){}
+    constructor( readonly props: EventCultureProps){}
 
     static create(props: {
         note: string;

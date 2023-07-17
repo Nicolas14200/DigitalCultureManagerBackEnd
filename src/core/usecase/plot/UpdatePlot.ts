@@ -13,6 +13,8 @@ export interface UpdatePlotProps {
     ph?: number;
     pebbles?: StarsLevel;
     plank?: number;
+    width?: number;
+    heigth?: number;
 }
 
 @injectable()
@@ -31,6 +33,8 @@ export class UpdatePlot implements Usecase <UpdatePlotProps, Plot> {
             pebbles:payload.pebbles,
             ph:payload.ph,
             plank:payload.plank,
+            width: payload.width,
+            heigth: payload.heigth
         })
        this.plotRepository.update(plot);
        return plot;

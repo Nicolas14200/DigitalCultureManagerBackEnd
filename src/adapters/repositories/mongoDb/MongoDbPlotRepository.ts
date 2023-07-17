@@ -12,22 +12,22 @@ export class MongoDbPlotRepository implements PlotRepository {
     async save(plot: Plot): Promise<Plot> {
         await PlotModel.findOneAndUpdate(
             {
-                id: plot.plotProps.id
+                id: plot.props.id
             },
             {
                 $set: {
-                    id: plot.plotProps.id,
-                    name: plot.plotProps.name,
-                    codeName: plot.plotProps.codeName,
-                    width: plot.plotProps.width,
-                    heigth: plot.plotProps.heigth,
-                    area: plot.plotProps.area,
-                    ph: plot.plotProps.ph,
-                    pebbles: plot.plotProps.pebbles,
-                    plank: plot.plotProps.plank,
-                    series: plot.plotProps.series,
-                    subPlot: plot.plotProps.subPlot,
-                    eventCulture: plot.plotProps.eventCulture,
+                    id: plot.props.id,
+                    name: plot.props.name,
+                    codeName: plot.props.codeName,
+                    width: plot.props.width,
+                    heigth: plot.props.heigth,
+                    area: plot.props.area,
+                    ph: plot.props.ph,
+                    pebbles: plot.props.pebbles,
+                    plank: plot.props.plank,
+                    series: plot.props.series,
+                    subPlot: plot.props.subPlot,
+                    eventCulture: plot.props.eventCulture,
                 }
             },
             {
@@ -36,7 +36,35 @@ export class MongoDbPlotRepository implements PlotRepository {
         )
         return plot;
     }
-    
+
+    async update(plot: Plot): Promise<Plot> {
+        await PlotModel.findOneAndUpdate(
+            {
+                id: plot.props.id
+            },
+            {
+                $set: {
+                    id: plot.props.id,
+                    name: plot.props.name,
+                    codeName: plot.props.codeName,
+                    width: plot.props.width,
+                    heigth: plot.props.heigth,
+                    area: plot.props.area,
+                    ph: plot.props.ph,
+                    pebbles: plot.props.pebbles,
+                    plank: plot.props.plank,
+                    series: plot.props.series,
+                    subPlot: plot.props.subPlot,
+                    eventCulture: plot.props.eventCulture,
+                }
+            },
+            {
+                upsert: true,
+            }
+        )
+        return plot;
+    }
+
     async getById(id: string): Promise<Plot> {
         const plot: MongoDbPlotMapperProps = await PlotModel.findOne({
             id: id
@@ -53,5 +81,9 @@ export class MongoDbPlotRepository implements PlotRepository {
         if (plot){
             return this.mongoDbPlotMapper.toDomain(plot);
         }
+    }
+
+    async delete(id: string): Promise<void> {
+        await PlotModel.findOneAndDelete({id});  
     }
 }

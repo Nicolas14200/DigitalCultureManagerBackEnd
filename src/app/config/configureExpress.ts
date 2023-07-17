@@ -4,10 +4,11 @@ import { useContainer, useExpressServer } from "routing-controllers";
 import { UserController } from "../../app/modules/users/UserController";
 import { AppDependencies } from "./AppDependencies";
 import { PlotController } from "../../app/modules/plot/PlotController";
+import { EventCultureController } from "../../app/modules/eventCulture/EventCultureController";
 
 export function configureExpress(app: Application) {
     
-    const routes = [UserController, PlotController];
+    const routes = [UserController, PlotController, EventCultureController];
 
     const container = new AppDependencies().init();
     

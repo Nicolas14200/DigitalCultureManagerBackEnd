@@ -1,7 +1,7 @@
 import { Series } from "../../../../core/domain/valueObjects/Series";
 import { StarsLevel } from "../../../../core/domain/valueObjects/StarsLevel";
 import { Plot } from "../plot/Plot";
-import { EventCulture } from "../event/EventCulture";
+import { EventCulture } from "../eventCulture/EventCulture";
 
 export interface PlotResponse {
     name: string;

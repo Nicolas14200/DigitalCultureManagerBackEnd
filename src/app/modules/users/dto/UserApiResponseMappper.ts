@@ -5,10 +5,10 @@ import { UserResponse } from "../../../../core/domain/entities/apiResponse/UserR
 export class UserApiResponseMapper implements Mapper< User, UserResponse > {
     fromDomain(user: User): UserResponse {
         return {
-            email: user.userProperty.email,
-            name: user.userProperty.name,
-            password: user.userProperty.password,
-            role: user.userProperty.role
+            email: user.props.email,
+            name: user.props.name,
+            password: user.props.password,
+            role: user.props.role
         }
     }
 }

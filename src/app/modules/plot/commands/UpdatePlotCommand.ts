@@ -19,4 +19,10 @@ export class UpdatePlotCommand {
     
     @IsNumber()
     plank?: number;
+
+    @IsNumber()
+    heigth?: number;
+
+    @IsNumber()
+    width?: number;
 }

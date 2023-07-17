@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { EventCulture } from "../../core/domain/entities/event/EventCulture";
+import { EventCulture } from "../../core/domain/entities/eventCulture/EventCulture";
 import { MongoDbEventCultureRepository } from "../repositories/mongoDb/MongoDbEventCultureRepository";
 import { v4 } from "uuid";
 

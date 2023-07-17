@@ -28,7 +28,7 @@ export class UpdateUser implements Usecase<UpdateUserProps, User>{
         user.update({
             name: payload.name,
             password: hash,
-            id: user.userProperty.id
+            id: user.props.id
         });
         this.userRepository.save(user);
         return user

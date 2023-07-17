@@ -1,5 +1,5 @@
 import { Mapper } from "../../../../core/domain/Mapper";
-import { EventCulture } from "../../../../core/domain/entities/event/EventCulture";
+import { EventCulture } from "../../../../core/domain/entities/eventCulture/EventCulture";
 
 export interface MongoDbEventCultureMapperProps {
     id: string;

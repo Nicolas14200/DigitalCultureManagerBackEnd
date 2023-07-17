@@ -1,4 +1,4 @@
-import { EventCulture } from "../entities/event/EventCulture";
+import { EventCulture } from "../entities/eventCulture/EventCulture";
 
 export interface EventCultureRepository {
     save(eventCulture: EventCulture): Promise<EventCulture>;
