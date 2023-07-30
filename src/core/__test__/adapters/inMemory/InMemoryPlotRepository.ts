@@ -18,7 +18,6 @@ export class InMemoryPlotRepository implements PlotRepository {
     async save(plot: Plot): Promise<Plot> {
         try{
         const plotdebug = await this.getByCodeName(plot.props.codeName);
-        console.log(plotdebug)
         throw new PlotError.PlotExist("PLOT_EXIST");
         }
         catch(e){

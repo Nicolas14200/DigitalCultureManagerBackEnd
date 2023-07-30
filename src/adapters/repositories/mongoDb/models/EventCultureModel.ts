@@ -1,9 +1,9 @@
 import * as mongoose from "mongoose";
-const eventCultureShema = new mongoose.Schema({
+export const eventCultureShema = new mongoose.Schema({
     id: {
         type: String,
         required: true,
-        unique: true,
+        unique: true
       },
     date: {
         type: Date,
@@ -15,7 +15,6 @@ const eventCultureShema = new mongoose.Schema({
     plotId: {
         type: String,
         required: true,
-        unique: true,
     }
 })
-export const EventCultureModel = mongoose.model("eventCulture", eventCultureShema)
+export const eventCultureModel = mongoose.model("eventCultures", eventCultureShema)

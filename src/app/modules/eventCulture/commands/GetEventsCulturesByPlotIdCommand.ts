@@ -1,8 +1,5 @@
 import { IsString } from "class-validator";
-export class CreateEventCultureCommand {
-    @IsString()
-    note: string
-
+export class GetEventsCulturesByPlotIdCommand {
     @IsString()
     plotId: string
 }

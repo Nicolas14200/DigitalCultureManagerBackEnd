@@ -20,7 +20,7 @@ describe("Integration - MongoDbPlotRepository", () => {
     })
     it("Should save a plot in mongodb repository", async () => {
         await PlotRepo.save(plot);
-        const plotExist: Plot = await PlotRepo.getById(plot.plotProps.id)
-        expect(plotExist.plotProps.name).toEqual("parcelle 01")
+        const plotExist: Plot = await PlotRepo.getById(plot.props.id)
+        expect(plotExist.props.name).toEqual("parcelle 01")
     })
 })

@@ -16,6 +16,7 @@ import { GetPlotById } from "../../core/usecase/plot/GetPlotById";
 import { EventCultureController } from "../../app/modules/eventCulture/EventCultureController";
 import { CreateEventCulture } from "../../core/usecase/eventCulture/CreateEventCulture";
 import { MongoDbEventCultureRepository } from "../../adapters/repositories/mongoDb/MongoDbEventCultureRepository";
+import { GetEventsCulturesByPlotId } from "../../core/usecase/eventCulture/GetEventsCulturesByPlotId";
 
 const serviceAccount = require("./digital-culture-manager-firebase-adminsdk-ajq5q-3f4899c476.json")
 
@@ -40,6 +41,7 @@ export class AppDependencies extends Container {
 
         this.bind(EventCultureController).toSelf()
         this.bind(CreateEventCulture).toSelf()
+        this.bind(GetEventsCulturesByPlotId).toSelf()
         return this;
     }
 }

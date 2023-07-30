@@ -6,6 +6,18 @@ export class InMemoryEventCultureRepository implements EventCultureRepository {
 
     constructor(readonly eventCultureMap: Map < string, EventCulture > ){
     }
+    
+    async getEventCultureByPlotId(plotId: string): Promise<EventCulture[]> {
+        let id : string = "";
+        let envetCultureArray: EventCulture[] = [];
+        for (const [key, value] of this.eventCultureMap.entries()) {
+          if (value.props.plotId === plotId) {
+            id = key;
+            envetCultureArray.push(this.eventCultureMap.get(id))
+          }
+        }
+        return envetCultureArray;
+    }
     async save(eventCulture: EventCulture): Promise<EventCulture> {
         this.eventCultureMap.set(eventCulture.props.id, eventCulture);     
         return eventCulture;

@@ -18,11 +18,11 @@ describe('Integration - MongoDbUserRepository', () => {
     })
     it("should save a user in a mongodb repository", async () => {
         await userRepo.save(user);
-        const userExist: User = await userRepo.getById(user.userProperty.id)
-        expect(userExist.userProperty.name).toEqual("Ban")
+        const userExist: User = await userRepo.getById(user.props.id)
+        expect(userExist.props.name).toEqual("Ban")
     })
     it("should return a user via is email", async () => {
-        const userExist: User = await userRepo.getByEmail(user.userProperty.email)
-        expect(userExist.userProperty.name).toEqual("Ban")
+        const userExist: User = await userRepo.getByEmail(user.props.email)
+        expect(userExist.props.name).toEqual("Ban")
     })
 })

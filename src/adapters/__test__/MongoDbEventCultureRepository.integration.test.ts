@@ -6,18 +6,44 @@ import { v4 } from "uuid";
 describe("Integration - MongoDbEventCultureRepository", () => {
     let eventCultureRepo : MongoDbEventCultureRepository;
     let eventCulture : EventCulture;
+    let eventCulture1 : EventCulture;
+    let eventCulture2 : EventCulture;
+    let eventCulture3 : EventCulture;
     beforeAll(async () => {
         eventCultureRepo = new MongoDbEventCultureRepository()
         await mongoose.connect(`mongodb://127.0.0.1:27017/DCM`);
         eventCulture = EventCulture.create({
             note:"Note",
-            plotId:v4()
+            plotId: v4()
         })
-    })
-    it("Should save a plot in mongodb repository", async () => {
+        console.log(eventCulture.props.id)
+        eventCulture1 = EventCulture.create({
+            note:"Note1",
+            plotId: eventCulture.props.plotId
+        })
+        console.log(eventCulture1.props.id)
+        eventCulture2 = EventCulture.create({
+            note:"Note2",
+            plotId: eventCulture.props.plotId
+        })
+        console.log(eventCulture2.props.id)
+        eventCulture3 = EventCulture.create({
+            note:"Note3",
+            plotId: eventCulture.props.plotId
+        })
         await eventCultureRepo.save(eventCulture);
-        const eventCultureExist: EventCulture = await eventCultureRepo.getById(eventCulture.eventProps.id)
-        console.log(eventCultureExist);
-        expect(eventCultureExist.eventProps.note).toEqual("Note")
+    })
+    it("Should SAVE AND GETBYID a plot in mongodb repository", async () => {
+        const eventCultureExist: EventCulture = await eventCultureRepo.getById(eventCulture.props.id)
+        expect(eventCultureExist.props.note).toEqual("Note")
+    })
+
+    it("Should return an array of event culture", async () => {
+        await eventCultureRepo.save(eventCulture1);
+        await eventCultureRepo.save(eventCulture2);
+        await eventCultureRepo.save(eventCulture3);
+        const eventsCultures = await eventCultureRepo.getEventCultureByPlotId(eventCulture.props.plotId);
+        console.log(eventsCultures)
+        expect(eventsCultures[0].props.note).toEqual("Note")
     })
 })
