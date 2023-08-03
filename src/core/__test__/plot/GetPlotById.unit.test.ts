@@ -23,7 +23,7 @@ describe('Unit - GetPlotById', () => {
         await plotRepo.save(plot);
     })
     it("Should return a plot via is ID", async () => {
-        const plotById: Plot = await getPlotById.execute(plot.plotProps.id);
-        expect(plotById.plotProps.name).toEqual("Parcelle 0001")
+        const plotById: Plot = await getPlotById.execute(plot.props.id);
+        expect(plotById.props.name).toEqual("Parcelle 0001")
     })
 })

@@ -2,6 +2,7 @@ import { Mapper } from "../../../../core/domain/Mapper";
 import { PlotResponse } from "../../../../core/domain/entities/apiResponse/PlotResponse";
 import { Plot } from "../../../../core/domain/entities/plot/Plot";
 
+
 export class PlotApiResponseMapper implements Mapper<Plot, PlotResponse>{
     fromDomain(plot: Plot): PlotResponse {
         return {
@@ -15,7 +16,12 @@ export class PlotApiResponseMapper implements Mapper<Plot, PlotResponse>{
             plank: plot.props.plank,
             series: plot.props.series,
             subPlot: plot.props.subPlot,
-            eventCulture: plot.props.eventCulture
+            eventCulture: plot.props.eventCulture.map((event)=>{
+                return {
+                    date: event.props.date,
+                    note: event.props.note,
+                }
+            })
         }
     }
 }

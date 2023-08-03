@@ -4,6 +4,7 @@ import { Usecase } from "../Usecase";
 import { inject, injectable } from "inversify";
 import { DCMIdentifiers } from "../DCMIdentifiers";
 import { EventCultureRepository } from "../../../core/domain/repositories/EventCultureRepository";
+import { PlotRepository } from "core/domain/repositories/PlotRepository";
 
 export interface CreateEventCultureProps {
     note: string;
@@ -15,12 +16,17 @@ export class CreateEventCulture implements Usecase<CreateEventCultureProps, Even
 
     constructor(
         @inject(DCMIdentifiers.eventCultureRepository)
-        private readonly _eventCultureRepository : EventCultureRepository
+        private readonly _eventCultureRepository : EventCultureRepository,
+        @inject(DCMIdentifiers.plotRepository)
+        private readonly _plotRepository : PlotRepository
         ){}
 
     async execute(payload: CreateEventCultureProps): Promise<EventCulture> {
         const eventCulture = EventCulture.create(payload);
         await this._eventCultureRepository.save(eventCulture);
+        const plot = await this._plotRepository.getById(payload.plotId);
+        plot.addEventCulture(eventCulture);
+        await this._plotRepository.save(plot);
         return eventCulture;
     }
 

@@ -7,6 +7,10 @@ export class InMemoryEventCultureRepository implements EventCultureRepository {
     constructor(readonly eventCultureMap: Map < string, EventCulture > ){
     }
     
+    delete(id: string): void {
+      this.eventCultureMap.delete(id);
+    }
+    
     async getEventCultureByPlotId(plotId: string): Promise<EventCulture[]> {
         let id : string = "";
         let envetCultureArray: EventCulture[] = [];

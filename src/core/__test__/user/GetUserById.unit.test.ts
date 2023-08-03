@@ -16,7 +16,7 @@ describe("Unit - GetUserById", () => {
         await userRepo.save(user)
     })
     it("Should return a user via is ID", async () => {
-        const userExist = await userRepo.getById(user.userProperty.id);
-        expect(userExist.userProperty.name).toEqual("bibi")
+        const userExist = await userRepo.getById(user.props.id);
+        expect(userExist.props.name).toEqual("bibi")
     })
 })

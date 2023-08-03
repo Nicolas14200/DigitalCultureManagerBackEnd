@@ -36,13 +36,14 @@ describe("e2e - UserController", () => {
         .send({
             email:`${v4()}@doe.com`,
             password: "Passw0rd1425783",
-            role: 4,
+            role: "ADMIN",
             name: "DALAM",
         })
-        .expect(201)
+        
         .expect( response => {
             console.log(CreateUser.name, response.body)
         })
+        .expect(201)
     })
     it("Should update a user", async () => {
         await request(app)
@@ -67,13 +68,13 @@ describe("e2e - UserController", () => {
     })
     it("Should delete a user via is id", async () => {
         await request(app)
-        .delete(`/user/delete`)
+        .delete(`/user/`)
         .send({
             id: user.props.id,
         })
-        .expect(204)
         .expect(response => {
-            console.log(DeleteUser.name, response.body)
+            console.log(DeleteUser.name, response.error)
         })
+        .expect(204)
     })
 })

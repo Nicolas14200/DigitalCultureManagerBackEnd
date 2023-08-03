@@ -24,9 +24,9 @@ describe("Unit - UpdatePlot", () => {
     })
     it ("Should Update a plot", async () => {
         const plotUpdate: Plot = await updatePlot.execute({
-            id: plot.plotProps.id,
+            id: plot.props.id,
             name: "Name Update"
         })
-        expect(plotUpdate.plotProps.name).toEqual("Name Update")
+        expect(plotUpdate.props.name).toEqual("Name Update")
     })
 })

@@ -20,4 +20,10 @@ export class EventCulture {
             date: new Date()
         })
     }
+
+    update(props:{
+        note:string
+    }){
+        this.props.note = props.note
+    }
 }

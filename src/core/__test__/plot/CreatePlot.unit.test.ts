@@ -35,7 +35,7 @@ describe("Unit - createPlot", () => {
             plank: 50,
         })
         const plot = createPlot.execute({
-            name: "Parcelle 0003",
+            name: "Parcelle 0002",
             codeName: "azerty",
             heigth: 10,
             width: 5,
@@ -43,6 +43,6 @@ describe("Unit - createPlot", () => {
             ph: 1,
             plank: 50,
         })
-        expect(plot).rejects.toThrow("PLOT_EXIST");
+        await expect(plot).rejects.toThrow("PLOT_EXIST");
     })
 })

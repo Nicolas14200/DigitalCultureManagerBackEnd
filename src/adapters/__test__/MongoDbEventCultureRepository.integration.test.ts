@@ -16,17 +16,17 @@ describe("Integration - MongoDbEventCultureRepository", () => {
             note:"Note",
             plotId: v4()
         })
-        console.log(eventCulture.props.id)
+
         eventCulture1 = EventCulture.create({
             note:"Note1",
             plotId: eventCulture.props.plotId
         })
-        console.log(eventCulture1.props.id)
+
         eventCulture2 = EventCulture.create({
             note:"Note2",
             plotId: eventCulture.props.plotId
         })
-        console.log(eventCulture2.props.id)
+   
         eventCulture3 = EventCulture.create({
             note:"Note3",
             plotId: eventCulture.props.plotId
@@ -46,4 +46,11 @@ describe("Integration - MongoDbEventCultureRepository", () => {
         console.log(eventsCultures)
         expect(eventsCultures[0].props.note).toEqual("Note")
     })
+
+    it("Should delete a eventCulture", async () => {
+        await eventCultureRepo.delete(eventCulture1.props.id);
+        const eventCulture1Exist = eventCultureRepo.getById(eventCulture1.props.id);
+        expect(eventCulture1Exist).rejects.toThrow("EVENT_CULTURE_NOT_FOUND");
+    })
+
 })

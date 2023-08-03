@@ -1,7 +1,6 @@
 import { Series } from "../../../../core/domain/valueObjects/Series";
 import { StarsLevel } from "../../../../core/domain/valueObjects/StarsLevel";
-import { Plot } from "../plot/Plot";
-import { EventCulture } from "../eventCulture/EventCulture";
+import { EventCultureResponse } from "./EventCultureResponse";
 
 export interface PlotResponse {
     name: string;
@@ -13,6 +12,6 @@ export interface PlotResponse {
     pebbles: StarsLevel;
     plank: number;
     series: Series[];
-    subPlot: Plot[];
-    eventCulture: EventCulture[];
+    subPlot: string[];
+    eventCulture: EventCultureResponse[];
 }

@@ -1,5 +1,5 @@
 import { CreatePlot, CreatePlotProps } from "../../../core/usecase/plot/CreatePlot";
-import { injectable } from "inversify";
+import { inject, injectable } from "inversify";
 import { Body, Delete, Get, JsonController, Post, Put, Req, Res } from "routing-controllers";
 import { CreatePlotCommand } from "./commands/CreatePlotCommand";
 import { PlotApiResponseMapper } from "./dto/PlotApiResponseMapper";
@@ -9,6 +9,12 @@ import { UpdatePlot } from "../../../core/usecase/plot/UpdatePlot";
 import { DeletePlot } from "../../../core/usecase/plot/DeletePlot";
 import { DeletePlotCommand } from "./commands/DeletePlotCommand";
 import { GetPlotById } from "../../../core/usecase/plot/GetPlotById";
+import { AddSeriesToPlot } from "../../../core/usecase/plot/AddSeriesToPlot";
+import { AddSeriesToPlotCommand } from "./commands/AddSeriesToPlotCommand";
+import { AddSubPlotCommand } from "./commands/AddSubPlotCommand";
+import { AddSubPlot } from "../../../core/usecase/plot/AddSubPlot";
+import { MongoDbPlotRepository } from "../../../adapters/repositories/mongoDb/MongoDbPlotRepository";
+import { DCMIdentifiers } from "../../../core/usecase/DCMIdentifiers";
 
 @JsonController("/plot")
 @injectable()
@@ -19,12 +25,15 @@ export class PlotController {
     private readonly _createPlot: CreatePlot,
     private readonly _updatePlot: UpdatePlot,
     private readonly _deletePlot: DeletePlot,
-    private readonly _getPlotById: GetPlotById
+    private readonly _getPlotById: GetPlotById,
+    private readonly _addSeriesToPlot: AddSeriesToPlot,
+    private readonly _addSubPlot: AddSubPlot,
+    @inject(DCMIdentifiers.plotRepository)
+    private readonly _plotRepo: MongoDbPlotRepository
   ) {}
 
   @Post("/create")
   async createPlot(
-    @Req() request: Request,
     @Res() response: Response,
     @Body() cmd: CreatePlotCommand
   ) {
@@ -39,6 +48,7 @@ export class PlotController {
         plank: cmd.plank,
       };
       const plot = await this._createPlot.execute(payload);
+      
       return response.status(201).send({
         ...this.plotApiResponseMapper.fromDomain(plot),
       });
@@ -94,5 +104,40 @@ export class PlotController {
     return response.status(200).send({
       ...this.plotApiResponseMapper.fromDomain(plot)
     });
+  }
+
+  @Post("/addseries")
+  async addSeriesToPlot(
+    @Res() response: Response,
+    @Body() cmd: AddSeriesToPlotCommand
+  ){
+    const plot = await this._addSeriesToPlot.execute({
+        plotId:cmd.plotId,
+        series:{
+          nbPlank: cmd.series.nbPlank,
+          vegetableVariety: cmd.series.vegetableVariety,
+        },
+    })
+    return response.sendStatus(200);
+  }
+
+  @Post("/addsubplot")
+  async addSubPlot(
+    @Res() response: Response,
+    @Body() cmd: AddSubPlotCommand
+  ){
+    try{
+      await this._addSubPlot.execute({
+        currentId : cmd.currentId,
+        plotIdToAdd: cmd.plotIdToAdd
+    })
+
+    return response.status(200).send( await this._plotRepo.getById(cmd.currentId));
+    }catch(e){
+      return response.status(400).send({
+        message: e.message,
+      });
+    }
+
   }
 }

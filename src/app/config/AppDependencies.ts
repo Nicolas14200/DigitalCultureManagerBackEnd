@@ -17,6 +17,11 @@ import { EventCultureController } from "../../app/modules/eventCulture/EventCult
 import { CreateEventCulture } from "../../core/usecase/eventCulture/CreateEventCulture";
 import { MongoDbEventCultureRepository } from "../../adapters/repositories/mongoDb/MongoDbEventCultureRepository";
 import { GetEventsCulturesByPlotId } from "../../core/usecase/eventCulture/GetEventsCulturesByPlotId";
+import { GetEventCultureById } from "../../core/usecase/eventCulture/GetEventCultureById";
+import { DeleteEventCulture } from "../../core/usecase/eventCulture/DeleteEventCulture";
+import { UpdateEventCulture } from "../../core/usecase/eventCulture/UpdateEventCulture";
+import { AddSeriesToPlot } from "../../core/usecase/plot/AddSeriesToPlot";
+import { AddSubPlot } from "../../core/usecase/plot/AddSubPlot";
 
 const serviceAccount = require("./digital-culture-manager-firebase-adminsdk-ajq5q-3f4899c476.json")
 
@@ -38,10 +43,15 @@ export class AppDependencies extends Container {
         this.bind(UpdatePlot).toSelf()
         this.bind(DeletePlot).toSelf()
         this.bind(GetPlotById).toSelf()
+        this.bind(AddSeriesToPlot).toSelf()
+        this.bind(AddSubPlot).toSelf()
 
         this.bind(EventCultureController).toSelf()
         this.bind(CreateEventCulture).toSelf()
+        this.bind(GetEventCultureById).toSelf()
         this.bind(GetEventsCulturesByPlotId).toSelf()
+        this.bind(DeleteEventCulture).toSelf()
+        this.bind(UpdateEventCulture).toSelf()
         return this;
     }
 }

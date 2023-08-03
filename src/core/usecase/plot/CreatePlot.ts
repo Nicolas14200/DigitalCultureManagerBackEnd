@@ -5,6 +5,7 @@ import { Identity } from "../../../core/domain/valueObjects/Identitty";
 import { PlotRepository } from "../../../core/domain/repositories/PlotRepository";
 import { inject, injectable } from "inversify";
 import { DCMIdentifiers } from "../DCMIdentifiers";
+import { PlotError } from "../../../core/domain/models/errors/PlotError";
 
 export interface CreatePlotProps {
     name: string;
@@ -24,17 +25,27 @@ export class CreatePlot implements Usecase<CreatePlotProps, Plot> {
         ){}
 
     async execute(payload: CreatePlotProps): Promise<Plot> {
-        const plot =  Plot.create({
-            name: payload.name,
-            codeName: payload.codeName,
-            width: payload.width,
-            heigth: payload.heigth,
-            ph: payload.ph,
-            pebbles: payload.pebbles,
-            plank: payload.plank,
-        })
-        await this._plotRepository.save(plot)
-        return plot;
+        try {
+            const plotExist = await this._plotRepository.getByCodeName(payload.codeName)
+            if (plotExist){
+                throw new PlotError.PlotExist("PLOT_EXIST");
+            }
+        } catch(e){
+            if(e.message === "PLOT_NOT_FOUND"){
+                const plot =  Plot.create({
+                    name: payload.name,
+                    codeName: payload.codeName,
+                    width: payload.width,
+                    heigth: payload.heigth,
+                    ph: payload.ph,
+                    pebbles: payload.pebbles,
+                    plank: payload.plank,
+                })
+                await this._plotRepository.save(plot)
+                return plot;
+            }
+            throw e;
+        }
     }
 
     async canExecute(identity: Identity): Promise<boolean> {

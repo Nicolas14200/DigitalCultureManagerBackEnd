@@ -9,17 +9,26 @@ import { v4 } from "uuid";
 import { StarsLevel } from "../../core/domain/valueObjects/StarsLevel";
 import { CreateEventCulture } from "../../core/usecase/eventCulture/CreateEventCulture";
 import { GetEventsCulturesByPlotId } from '../../core/usecase/eventCulture/GetEventsCulturesByPlotId';
+import { GetEventCultureById } from '../../core/usecase/eventCulture/GetEventCultureById';
+import { MongoDbEventCultureRepository } from '../../adapters/repositories/mongoDb/MongoDbEventCultureRepository';
+import { EventCulture } from '../../core/domain/entities/eventCulture/EventCulture';
+import { DCMIdentifiers } from '../../core/usecase/DCMIdentifiers';
+import { UpdateEventCulture } from '../../core/usecase/eventCulture/UpdateEventCulture';
 
 const app = express();
 
-configureExpress(app);
+const container = configureExpress(app);
 
 describe("e2e - EventCultureController", () => {
     let plotRepo: MongoDbPlotRepository;
+    let eventCultureRepo: MongoDbEventCultureRepository;
+    let eventCulture: EventCulture
     let plot : Plot;
     beforeAll(async () => {
-        await mongoose.connect(`mongodb://127.0.0.1:27017/DCM_test_e2e`);
-        plotRepo = new MongoDbPlotRepository()
+        await mongoose.connect(`mongodb://127.0.0.1:27017/DCM`);
+        plotRepo = container.get(DCMIdentifiers.plotRepository)
+        eventCultureRepo = container.get(DCMIdentifiers.eventCultureRepository)
+
         plot = Plot.create({
             name:`${v4()}`,
             codeName:`${v4()}`,
@@ -30,6 +39,11 @@ describe("e2e - EventCultureController", () => {
             plank:1
         }) 
         await plotRepo.save(plot)
+        eventCulture = EventCulture.create({
+            note: "NOTE",
+            plotId: plot.props.id,
+        });
+        await eventCultureRepo.save(eventCulture);
     });
     it("Should return 200 and create an Event culture", async () => {
         await request(app)
@@ -40,11 +54,11 @@ describe("e2e - EventCultureController", () => {
         })
         
         .expect( response => {
-            console.log(CreateEventCulture.name, response.body)
+            console.log(CreateEventCulture.name, response.error)
         })
         .expect(201)
     })
-    it("Should return 200 and return all envent culture of plot id", async () => {
+    it("Should return 200 and return all event culture of plot id", async () => {
         await request(app)
         .post("/event/getbyplotid")
         .send({
@@ -56,4 +70,39 @@ describe("e2e - EventCultureController", () => {
         })
         .expect(200)
     })
+    it("Should return 200 and return a event culture by is id", async () => {
+        await request(app)
+        .post("/event/getbyid")
+        .send({
+            id: eventCulture.props.id
+        })
+        .expect( response => {
+            console.log(GetEventCultureById.name, response.body)
+        })
+        .expect(200)
+    })
+    it("Should return 200 and update a event culture", async () => {
+        await request(app)
+        .put("/event/update")
+        .send({
+            id: eventCulture.props.id,
+            note: "NEW NOTE"
+        })
+        .expect( response => {
+            console.log(UpdateEventCulture.name, response.body)
+        })
+        .expect(200)
+    })
+    it("Should return 200 and delete a event culture by is id", async () => {
+        await request(app)
+        .delete("/event/delete")
+        .send({
+            id: eventCulture.props.id
+        })
+        .expect( response => {
+            console.log(GetEventCultureById.name, response.body)
+        })
+        .expect(200)
+    })
+
 })

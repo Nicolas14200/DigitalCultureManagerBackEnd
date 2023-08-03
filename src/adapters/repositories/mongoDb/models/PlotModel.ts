@@ -1,4 +1,6 @@
 import * as mongoose from "mongoose";
+import { eventCultureShema } from './EventCultureModel'
+import { seriesModel } from "./SeriesModel";
 
 const plotShema = new mongoose.Schema({
     id: {
@@ -40,22 +42,19 @@ const plotShema = new mongoose.Schema({
         required: true,
     },
 
-    series:[{   
-        vegetableVariety: {
-            type: String
-        },
-        nbPlank: {
-            type: Number
-        }
-    }],
+    series:[
+        seriesModel
+    ],
 
-    subPlot: [{
-        plotShema:{}
-    }],
+    subPlot: [
+        String
+    ],
 
-    eventCulture:[{
-        eventCultureShema:{}
-    }]
+    eventCulture:{
+        type: [
+            eventCultureShema
+        ]
+    }
 })
 
 export const PlotModel = mongoose.model("plot", plotShema)

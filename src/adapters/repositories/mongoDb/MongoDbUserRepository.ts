@@ -1,9 +1,12 @@
+import 'reflect-metadata';
 import { User } from "../../../core/domain/entities/user/User";
 import { UserRepository } from "../../../core/domain/repositories/UserRepository";
 import { UserModel } from "./models/UserModel";
 import { MongoDbUserMappper, MongoDbUserMappperProps } from "./mappers/mongoDbUserMappper";
 import { UserError } from "../../../core/domain/models/errors/UserError";
+import { injectable } from "inversify";
 
+@injectable()
 export class MongoDbUserRepository implements UserRepository {
 
     private mongoDbUserMappper: MongoDbUserMappper = new MongoDbUserMappper();

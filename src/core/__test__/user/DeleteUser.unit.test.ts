@@ -19,8 +19,8 @@ describe("Unit - DeleteUser", () => {
         await userRepo.save(user);
     })
     it("Should delete a user", async () => {
-        await deleteUser.execute(user.userProperty.id);
-        const userExist = userRepo.getById(user.userProperty.id)
+        await deleteUser.execute(user.props.id);
+        const userExist = userRepo.getById(user.props.id)
         expect(userExist).rejects.toThrow("USER_NOT_FOUND");
     })
 })

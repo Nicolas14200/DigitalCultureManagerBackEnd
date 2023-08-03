@@ -19,4 +19,5 @@ export function configureExpress(app: Application) {
     useExpressServer(app, {
         controllers: routes
     })
+    return container
 }

@@ -16,8 +16,8 @@ describe("Unit - DeletePlot", () => {
             plank: 50,
         })
         await plotRepo.save(plot);
-        await deletePlot.execute(plot.plotProps.id);
-        const userExist = plotRepo.getById(plot.plotProps.id)
+        await deletePlot.execute(plot.props.id);
+        const userExist = plotRepo.getById(plot.props.id)
         expect(userExist).rejects.toThrow("PLOT_NOT_FOUND");
     })
 })

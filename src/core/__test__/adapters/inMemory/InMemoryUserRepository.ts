@@ -13,17 +13,16 @@ export class InMemoryUserRepository implements UserRepository {
                 throw new UserError.GetByIdFailed("USER_NOT_FOUND")
               }
             return user;
-    
     }
 
     async save(user: User): Promise<User> {
-        this.userMap.set(user.userProperty.id, user);
+        this.userMap.set(user.props.id, user);
         return user;
     }
 
     async getByEmail(email: string): Promise<User> {
             for (let [id, user] of this.userMap){
-                if (user.userProperty.email === email){
+                if (user.props.email === email){
                     return this.userMap.get(id);
                 }
             }

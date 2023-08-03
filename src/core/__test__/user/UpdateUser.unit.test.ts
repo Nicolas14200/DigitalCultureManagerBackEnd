@@ -24,11 +24,11 @@ describe('Unit - UpdateUser', () => {
     })
     it("Should Update a User", async () => {
         await updateUser.execute({
-            id:user.userProperty.id,
+            id:user.props.id,
             name:"ELO",
             password:"N0uvoPass0rd123456",
         })
-        const userUpdate = await userRepo.getById(user.userProperty.id);
-        expect(userUpdate.userProperty.name).toEqual("ELO")
+        const userUpdate = await userRepo.getById(user.props.id);
+        expect(userUpdate.props.name).toEqual("ELO")
     })
 })

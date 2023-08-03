@@ -6,14 +6,17 @@ import { InMemoryUserRepository } from "../adapters/inMemory/InMemoryUserReposit
 import { User } from '../../domain/entities/user/User';
 
 describe("Unit - CreateUser", () => {
+
     let userRepo : InMemoryUserRepository;
     let createUser: CreateUser;
     let bcryptPasswordGateway: BcryptPasswordGateway;
+
     beforeAll(() => {
         userRepo = new InMemoryUserRepository(new Map());
         bcryptPasswordGateway = new BcryptPasswordGateway()
         createUser = new CreateUser(userRepo, bcryptPasswordGateway);
     })
+    
     it("should create a user a save in the inMemeory repo", async () => {
         const user = await createUser.execute({
             name:"Ben",
@@ -21,8 +24,8 @@ describe("Unit - CreateUser", () => {
             password:"azerty0123456",
             role:Role.admin,
         })
-        const userExist: User = await userRepo.getByEmail(user.userProperty.email);
-        expect( userExist.userProperty.email).toEqual('benjamon@yopmail.com');
+        const userExist: User = await userRepo.getByEmail(user.props.email);
+        expect( userExist.props.email).toEqual('benjamon@yopmail.com');
     })
     it ('should return an error if user exist', async () => {
         await createUser.execute({

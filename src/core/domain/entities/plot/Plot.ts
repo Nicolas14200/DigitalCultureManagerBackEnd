@@ -14,7 +14,7 @@ export interface PlotProps {
     pebbles: StarsLevel;
     plank: number;
     series: Series[];
-    subPlot: Plot[];
+    subPlot: string[];
     eventCulture: EventCulture[];
 }
 
@@ -58,4 +58,17 @@ export class Plot {
         this.props.width = props.width,
         this.props.heigth = props.heigth
     }
+
+    addEventCulture(newEventCulture: EventCulture){
+        this.props.eventCulture.push(newEventCulture)
+    }
+
+    addSeries(series: Series){
+        this.props.series.push(series)
+    }
+
+    addSubPlot(plotId: string){
+        this.props.subPlot.push(plotId)
+    }
+    
 }
