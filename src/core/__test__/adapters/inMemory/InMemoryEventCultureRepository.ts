@@ -4,8 +4,7 @@ import { EventCultureRepository } from "../../../../core/domain/repositories/Eve
 
 export class InMemoryEventCultureRepository implements EventCultureRepository {
 
-    constructor(readonly eventCultureMap: Map < string, EventCulture > ){
-    }
+    constructor(readonly eventCultureMap: Map < string, EventCulture > ){}
     
     delete(id: string): void {
       this.eventCultureMap.delete(id);
