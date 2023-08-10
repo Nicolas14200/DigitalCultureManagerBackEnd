@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import { EventCulture } from "../../core/domain/entities/eventCulture/EventCulture";
-import { MongoDbEventCultureRepository } from "../repositories/mongoDb/MongoDbEventCultureRepository";
+import { EventCulture } from "../../../core/domain/entities/eventCulture/EventCulture";
+import { MongoDbEventCultureRepository } from "../../repositories/mongoDb/MongoDbEventCultureRepository";
 import { v4 } from "uuid";
 
 describe("Integration - MongoDbEventCultureRepository", () => {
