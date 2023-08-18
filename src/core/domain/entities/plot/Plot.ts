@@ -15,7 +15,7 @@ export interface PlotProps {
     plank: number;
     series: Series[];
     subPlot: string[];
-    eventCulture: EventCulture[];
+    eventCulture: string[];
 }
 
 export class Plot {
@@ -59,8 +59,8 @@ export class Plot {
         this.props.heigth = props.heigth
     }
 
-    addEventCulture(newEventCulture: EventCulture){
-        this.props.eventCulture.push(newEventCulture)
+    addEventCulture(newEventCultureId: string){
+        this.props.eventCulture.push(newEventCultureId)
     }
 
     addSeries(series: Series){

@@ -37,6 +37,17 @@ export class EventCultureController {
       const eventCulture = await this._createEventCulture.execute({
         note: cmd.note,
         plotId: cmd.plotId,
+        typeEventCulture: cmd.typeEventCulture,
+        machine: cmd.machine,
+        bringType: cmd.bringType,
+        quantity: cmd.quantity,
+        vegetable: cmd.vegetable,
+        method: cmd.method,
+        nbHuman: cmd.nbHuman,
+        nbHours:cmd.nbHours,
+        succes: cmd.succes,
+        disease: cmd.disease,
+        bug: cmd.bug,
       });
       return response.status(201).send({
         ...this.eventCultureApiResponseMapper.fromDomain(eventCulture),

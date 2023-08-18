@@ -1,9 +1,9 @@
-import { EventCulture } from "core/domain/entities/eventCulture/EventCulture";
+import { EventCulture } from "../../../core/domain/entities/eventCulture/EventCulture";
 import { Usecase } from "../Usecase";
-import { Identity } from "core/domain/valueObjects/Identitty";
+import { Identity } from "../../../core/domain/valueObjects/Identitty";
 import { DCMIdentifiers } from "../DCMIdentifiers";
 import { inject, injectable } from "inversify";
-import { EventCultureRepository } from "core/domain/repositories/EventCultureRepository";
+import { EventCultureRepository } from "../../../core/domain/repositories/EventCultureRepository";
 
 @injectable()
 export class GetEventsCulturesByPlotId implements Usecase<string, EventCulture[]> {

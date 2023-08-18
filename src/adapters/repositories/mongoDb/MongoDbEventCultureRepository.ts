@@ -36,7 +36,18 @@ export class MongoDbEventCultureRepository implements EventCultureRepository {
                     id: eventCulture.props.id,
                     date: eventCulture.props.date,
                     note: eventCulture.props.note,
-                    plotId: eventCulture.props.plotId
+                    plotId: eventCulture.props.plotId,
+                    machine: eventCulture.props.machine,
+                    typeEventCulture: eventCulture.props.typeEventCulture,
+                    bringType: eventCulture.props.bringType,
+                    quantity: eventCulture.props.quantity,
+                    vegetable: eventCulture.props.vegetable,
+                    method: eventCulture.props.method,
+                    nbHuman: eventCulture.props.nbHuman,
+                    nbHours: eventCulture.props.nbHours,
+                    succes: eventCulture.props.succes,
+                    disease: eventCulture.props.disease,
+                    bug: eventCulture.props.bug,
                 }
             },
             {

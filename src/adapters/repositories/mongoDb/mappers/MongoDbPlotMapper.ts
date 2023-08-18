@@ -1,5 +1,4 @@
-import { Mapper } from "core/domain/Mapper";
-import { EventCulture } from "../../../../core/domain/entities/eventCulture/EventCulture";
+import { Mapper } from "../../../../core/domain/Mapper";
 import { Plot } from "../../../../core/domain/entities/plot/Plot";
 import { Series } from "../../../../core/domain/valueObjects/Series";
 import { StarsLevel } from "../../../../core/domain/valueObjects/StarsLevel";
@@ -16,14 +15,7 @@ export interface MongoDbPlotMapperProps {
   plank: number;
   series: Series[];
   subPlot: string[];
-  eventCulture: EventCultureMapperProps[];
-}
-
-export interface EventCultureMapperProps {
-  id: string;
-  date: Date;
-  note: string;
-  plotId: string;
+  eventCulture: string[];
 }
 
 export class MongoDbPlotMapper implements Mapper<Plot, MongoDbPlotMapperProps> {
@@ -47,12 +39,7 @@ export class MongoDbPlotMapper implements Mapper<Plot, MongoDbPlotMapperProps> {
         }
       }),
       eventCulture: raw.eventCulture.map((eventCulture) => {
-        return new EventCulture({
-            date: eventCulture.date,
-            id: eventCulture.id,
-            note: eventCulture.note,
-            plotId: eventCulture.plotId,
-          })
+        return eventCulture
       }),
     });
   }
@@ -76,13 +63,8 @@ export class MongoDbPlotMapper implements Mapper<Plot, MongoDbPlotMapperProps> {
         }
       }),
       eventCulture: plot.props.eventCulture.map((eventCulture) => {
-        return {
-          date: eventCulture.props.date,
-          id: eventCulture.props.id,
-          note: eventCulture.props.note,
-          plotId: eventCulture.props.plotId,
-        };
-      }),
+        return eventCulture 
+      })
     };
   }
 }

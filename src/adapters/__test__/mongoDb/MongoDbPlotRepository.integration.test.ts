@@ -1,9 +1,9 @@
 import mongoose, { Connection } from "mongoose";
-import { Plot } from "../../core/domain/entities/plot/Plot";
-import { MongoDbPlotRepository } from "../repositories/mongoDb/MongoDbPlotRepository";
-import { StarsLevel } from "../../core/domain/valueObjects/StarsLevel";
-import { EventCulture } from "../../core/domain/entities/eventCulture/EventCulture";
-import { AddSeriesToPlot } from "../../core/usecase/plot/AddSeriesToPlot";
+import { Plot } from "../../../core/domain/entities/plot/Plot";
+import { MongoDbPlotRepository } from "../../repositories/mongoDb/MongoDbPlotRepository";
+import { StarsLevel } from "../../../core/domain/valueObjects/StarsLevel";
+import { EventCulture } from "../../../core/domain/entities/eventCulture/EventCulture";
+import { AddSeriesToPlot } from "../../../core/usecase/plot/AddSeriesToPlot";
 
 describe("Integration - MongoDbPlotRepository", () => {
     let PlotRepo : MongoDbPlotRepository;
@@ -41,9 +41,9 @@ describe("Integration - MongoDbPlotRepository", () => {
             note:"NOTE3",
             plotId:plot.props.id,
         })
-        plot.addEventCulture(eventCulture1);
-        plot.addEventCulture(eventCulture2);
-        plot.addEventCulture(eventCulture3);
+        plot.addEventCulture(eventCulture1.props.id);
+        plot.addEventCulture(eventCulture2.props.id);
+        plot.addEventCulture(eventCulture3.props.id);
         await PlotRepo.save(plot);
     })
 
@@ -55,12 +55,12 @@ describe("Integration - MongoDbPlotRepository", () => {
     it("Should save a plot in mongodb repository", async () => {
         const plotExist: Plot = await PlotRepo.getById(plot.props.id);
         expect(plotExist.props.name).toEqual("parcelle 01");
-        expect(plotExist.props.eventCulture[0].props.note).toEqual("NOTE1");
+        expect(plotExist.props.eventCulture[0]).toEqual((eventCulture1.props.id));
     })
 
     it("Should add a series to a plot", async () => {
         await addSeriesToPlot.execute({
-            id: plot.props.id,
+            plotId: plot.props.id,
             series:{
                 nbPlank: 10,
                 vegetableVariety: "NAVET",

@@ -1,7 +1,7 @@
-import { Identity } from "core/domain/valueObjects/Identitty";
+import { Identity } from "../../../core/domain/valueObjects/Identitty";
 import { Usecase } from "../Usecase";
 import { DCMIdentifiers } from "../DCMIdentifiers";
-import { EventCultureRepository } from "core/domain/repositories/EventCultureRepository";
+import { EventCultureRepository } from "../../../core/domain/repositories/EventCultureRepository";
 import { inject, injectable } from "inversify";
 
 @injectable()

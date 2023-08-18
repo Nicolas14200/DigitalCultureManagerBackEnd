@@ -3,12 +3,14 @@ import { CreateUserCommand } from "./commands/CreateUserCommand";
 import { Request, Response } from "express";
 import { CreateUser, CreateUserProps } from "../../../core/usecase/user/CreateUser";
 import { UserApiResponseMapper } from "./dto/UserApiResponseMappper";
-import { injectable } from "inversify";
+import { inject, injectable } from "inversify";
 import { UpdateUserCommand } from "./commands/UpdateUserCommand";
 import { UpdateUser } from "../../../core/usecase/user/UpdateUser";
 import { GetUserById } from "../../../core/usecase/user/GetUserById";
 import { DeleteUser } from "../../../core/usecase/user/DeleteUser";
 import { DeleteUserCommand } from "./commands/DeleteUserCommand";
+import { IdentityGateway } from "../../../core/domain/gateways/IdentityGateway";
+import { DCMIdentifiers } from "../../../core/usecase/DCMIdentifiers";
 
 @JsonController("/user")
 @injectable()
@@ -16,6 +18,8 @@ export class UserController {
   private userApiResponseMapper: UserApiResponseMapper =
   new UserApiResponseMapper();
   constructor(
+    @inject(DCMIdentifiers.identityGateway)
+    private readonly _identityGateway: IdentityGateway,
     private readonly _createUser: CreateUser,
     private readonly _updateUser: UpdateUser,
     private readonly _getUserById: GetUserById,
@@ -35,9 +39,14 @@ export class UserController {
         role: cmd.role,
       };
       const user = await this._createUser.execute(payload);
-      
+      const token = await this._identityGateway.generate({
+        id: user.props.id,
+        role: user.props.role,
+      });
+
       return response.status(201).send({
         ...this.userApiResponseMapper.fromDomain(user),
+        token
       });
     } catch (e) {
       return response.status(400).send({

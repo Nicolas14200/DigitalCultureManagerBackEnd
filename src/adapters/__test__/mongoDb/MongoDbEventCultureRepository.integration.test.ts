@@ -2,6 +2,9 @@ import mongoose from "mongoose";
 import { EventCulture } from "../../../core/domain/entities/eventCulture/EventCulture";
 import { MongoDbEventCultureRepository } from "../../repositories/mongoDb/MongoDbEventCultureRepository";
 import { v4 } from "uuid";
+import { Machine } from "../../../core/domain/valueObjects/Machine";
+import { TypeEventCulture } from "../../../core/domain/valueObjects/TypeEventCulture";
+import { BringType } from "../../../core/domain/valueObjects/BringType";
 
 describe("Integration - MongoDbEventCultureRepository", () => {
     let eventCultureRepo : MongoDbEventCultureRepository;
@@ -45,6 +48,45 @@ describe("Integration - MongoDbEventCultureRepository", () => {
         const eventsCultures = await eventCultureRepo.getEventCultureByPlotId(eventCulture.props.plotId);
         console.log(eventsCultures)
         expect(eventsCultures[0].props.note).toEqual("Note")
+    })
+
+    it("Should create a event culture of Ground work", async () => {
+        const eventCulturGroundWork = EventCulture.create({
+            note: "Ground work",
+            plotId: eventCulture.props.plotId,
+            machine: Machine.TRACTEUR,
+            typeEventCulture: TypeEventCulture.groundWork,
+        })
+        await eventCultureRepo.save(eventCulturGroundWork);
+        expect(eventCulturGroundWork.props.typeEventCulture).toEqual("groundWork");
+    })
+
+    it("Should create a event culture of Bring", async () => {
+        const eventCulturBring = EventCulture.create({
+            note: "bring",
+            plotId: eventCulture.props.plotId,
+            machine: Machine.TRACTEUR,
+            typeEventCulture: TypeEventCulture.bring,
+            bringType: BringType.compost,
+        })
+        await eventCultureRepo.save(eventCulturBring);
+        expect(eventCulturBring.props.typeEventCulture).toEqual("bring");
+        expect(eventCulturBring.props.bringType).toEqual("compost");
+    })
+    it("Should create a event culture of Implataion", async () => {
+        const eventCulturImplataion = EventCulture.create({
+            note: "Implantation",
+            plotId: eventCulture.props.plotId,
+            machine: Machine.TRACTEUR,
+            typeEventCulture: TypeEventCulture.Implantation,
+            vegetable: {
+                vegetableName: "carrotte",
+                variety: "potagères",
+                familly: "Apiacées"
+            }
+        })
+        await eventCultureRepo.save(eventCulturImplataion);
+        expect(eventCulturImplataion.props.typeEventCulture).toEqual("Implantation");
     })
 
     it("Should delete a eventCulture", async () => {

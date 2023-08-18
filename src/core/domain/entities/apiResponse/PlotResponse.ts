@@ -1,6 +1,5 @@
 import { Series } from "../../../../core/domain/valueObjects/Series";
 import { StarsLevel } from "../../../../core/domain/valueObjects/StarsLevel";
-import { EventCultureResponse } from "./EventCultureResponse";
 
 export interface PlotResponse {
     name: string;
@@ -13,5 +12,5 @@ export interface PlotResponse {
     plank: number;
     series: Series[];
     subPlot: string[];
-    eventCulture: EventCultureResponse[];
+    eventCulture: string[];
 }

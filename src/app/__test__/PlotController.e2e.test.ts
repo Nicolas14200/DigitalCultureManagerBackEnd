@@ -66,7 +66,7 @@ describe("e2e - PlotController", () => {
             plotId:plot.props.id,
         })
         await eventCultureRepo.save(eventCulture);
-        plot.addEventCulture(eventCulture); 
+        plot.addEventCulture(eventCulture.props.id); 
 
         series= {
             nbPlank: 10,
@@ -119,12 +119,9 @@ describe("e2e - PlotController", () => {
     it("Should return 200 and a plot via is Id", async () => {
         await request(app)
         .get(`/plot/${plot.props.id}`)
-        .send({
-            id: plot.props.id
-        })
         .expect(200)
         .expect( response => {
-            expect(response.body.eventCulture[0].note).toEqual("NOTE");    
+            expect(response.body.eventCulture[0]).toEqual(eventCulture.props.id);    
         });
     })
 

@@ -7,7 +7,6 @@ export class UserApiResponseMapper implements Mapper< User, UserResponse > {
         return {
             email: user.props.email,
             name: user.props.name,
-            password: user.props.password,
             role: user.props.role
         }
     }

@@ -17,10 +17,7 @@ export class PlotApiResponseMapper implements Mapper<Plot, PlotResponse>{
             series: plot.props.series,
             subPlot: plot.props.subPlot,
             eventCulture: plot.props.eventCulture.map((event)=>{
-                return {
-                    date: event.props.date,
-                    note: event.props.note,
-                }
+                return event
             })
         }
     }

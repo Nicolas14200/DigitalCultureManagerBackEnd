@@ -1,3 +1,5 @@
+import dotenv from 'dotenv';
+dotenv.config();
 import { UserController } from "../../app/modules/users/UserController";
 import { BcryptPasswordGateway } from "../../adapters/gateways/bcrypt/BcryptPasswordGateway";
 import { MongoDbUserRepository } from "../../adapters/repositories/mongoDb/MongoDbUserRepository";
@@ -22,8 +24,7 @@ import { DeleteEventCulture } from "../../core/usecase/eventCulture/DeleteEventC
 import { UpdateEventCulture } from "../../core/usecase/eventCulture/UpdateEventCulture";
 import { AddSeriesToPlot } from "../../core/usecase/plot/AddSeriesToPlot";
 import { AddSubPlot } from "../../core/usecase/plot/AddSubPlot";
-
-const serviceAccount = require("./digital-culture-manager-firebase-adminsdk-ajq5q-3f4899c476.json")
+import { JwtIdentityGateway } from "../../adapters/gateways/jwt/JwtIdentityGateway";
 
 export class AppDependencies extends Container {
     init(){
@@ -31,6 +32,7 @@ export class AppDependencies extends Container {
         this.bind(DCMIdentifiers.userRepository).toConstantValue(new MongoDbUserRepository())
         this.bind(DCMIdentifiers.eventCultureRepository).toConstantValue(new MongoDbEventCultureRepository())
         this.bind(DCMIdentifiers.plotRepository).toConstantValue(new MongoDbPlotRepository())
+        this.bind(DCMIdentifiers.identityGateway).toConstantValue(new JwtIdentityGateway(process.env.JWT_KEY))
 
         this.bind(UserController).toSelf()
         this.bind(CreateUser).toSelf()

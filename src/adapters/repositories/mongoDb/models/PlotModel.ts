@@ -1,5 +1,4 @@
 import * as mongoose from "mongoose";
-import { eventCultureShema } from './EventCultureModel'
 import { seriesModel } from "./SeriesModel";
 
 const plotShema = new mongoose.Schema({
@@ -50,11 +49,9 @@ const plotShema = new mongoose.Schema({
         String
     ],
 
-    eventCulture:{
-        type: [
-            eventCultureShema
-        ]
-    }
+    eventCulture: [
+        String
+    ]  
 })
 
 export const PlotModel = mongoose.model("plot", plotShema)

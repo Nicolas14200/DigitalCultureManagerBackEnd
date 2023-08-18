@@ -1,8 +1,8 @@
 import { inject, injectable } from "inversify";
 import { Usecase } from "../Usecase";
 import { DCMIdentifiers } from "../DCMIdentifiers";
-import { UserRepository } from "core/domain/repositories/UserRepository";
-import { Identity } from "core/domain/valueObjects/Identitty";
+import { UserRepository } from "../../../core/domain/repositories/UserRepository";
+import { Identity } from "../../../core/domain/valueObjects/Identitty";
 
 @injectable()
 export class DeleteUser implements Usecase<string, Promise<void>>{

@@ -42,9 +42,10 @@ describe("Unit - CreateEventCulture", () => {
             note: "second Note",
             plotId: plot.props.id,
         })
-        const getEventcultureInPlot = await plotRepo.getById(plot.props.id)
-        expect(getEventcultureInPlot.props.eventCulture[0].props.note).toEqual("First Note")
-        expect(getEventcultureInPlot.props.eventCulture[1].props.note).toEqual("second Note")
+        const getEventcultureInPlot = await plotRepo.getById(plot.props.id);
+        
+        expect(getEventcultureInPlot.props.eventCulture[0]).toEqual(eventCulture.props.id)
+        expect(getEventcultureInPlot.props.eventCulture[1]).toEqual(eventCulture2.props.id)
     })
 
 })
