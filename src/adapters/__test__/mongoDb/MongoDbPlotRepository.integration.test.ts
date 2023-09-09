@@ -7,7 +7,7 @@ import { AddSeriesToPlot } from "../../../core/usecase/plot/AddSeriesToPlot";
 
 describe("Integration - MongoDbPlotRepository", () => {
     let PlotRepo : MongoDbPlotRepository;
-    let plot : Plot;
+    let plot01 : Plot;
     let eventCulture1: EventCulture
     let eventCulture2: EventCulture
     let eventCulture3: EventCulture
@@ -20,7 +20,7 @@ describe("Integration - MongoDbPlotRepository", () => {
         connection = mongoose.createConnection(
             `mongodb://127.0.0.1:27017/DCM`
           );
-        plot = Plot.create({
+        plot01 = Plot.create({
             name: "parcelle 01",
             codeName: "ASX45",
             width:10,
@@ -31,20 +31,20 @@ describe("Integration - MongoDbPlotRepository", () => {
         })
         eventCulture1 = EventCulture.create({
             note:"NOTE1",
-            plotId:plot.props.id,
+            plotId:plot01.props.id,
         })
         eventCulture2 = EventCulture.create({
             note:"NOTE2",
-            plotId:plot.props.id,
+            plotId:plot01.props.id,
         })
         eventCulture3 = EventCulture.create({
             note:"NOTE3",
-            plotId:plot.props.id,
+            plotId:plot01.props.id,
         })
-        plot.addEventCulture(eventCulture1.props.id);
-        plot.addEventCulture(eventCulture2.props.id);
-        plot.addEventCulture(eventCulture3.props.id);
-        await PlotRepo.save(plot);
+        plot01.addEventCulture(eventCulture1.props.id);
+        plot01.addEventCulture(eventCulture2.props.id);
+        plot01.addEventCulture(eventCulture3.props.id);
+        await PlotRepo.save(plot01);
     })
 
     afterAll(async () => {
@@ -53,21 +53,26 @@ describe("Integration - MongoDbPlotRepository", () => {
       });
 
     it("Should save a plot in mongodb repository", async () => {
-        const plotExist: Plot = await PlotRepo.getById(plot.props.id);
+        const plotExist: Plot = await PlotRepo.getById(plot01.props.id);
         expect(plotExist.props.name).toEqual("parcelle 01");
         expect(plotExist.props.eventCulture[0]).toEqual((eventCulture1.props.id));
     })
 
     it("Should add a series to a plot", async () => {
         await addSeriesToPlot.execute({
-            plotId: plot.props.id,
+            plotId: plot01.props.id,
             series:{
                 nbPlank: 10,
                 vegetableVariety: "NAVET",
             }
         });
-        const plotExist: Plot = await PlotRepo.getById(plot.props.id);
+        const plotExist: Plot = await PlotRepo.getById(plot01.props.id);
         console.log(JSON.stringify(plotExist))
         expect(plotExist.props.series[0].vegetableVariety).toEqual("NAVET");
+    })
+
+    it("Should return all  plot", async () => {
+        const allPlot: Plot[] = await PlotRepo.getAll();
+        expect(allPlot[0].props.codeName).toEqual("ASX45");
     })
 })

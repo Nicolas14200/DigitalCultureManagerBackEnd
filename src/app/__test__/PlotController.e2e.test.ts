@@ -166,4 +166,12 @@ describe("e2e - PlotController", () => {
         })
         .expect(200)
     })
+    it("Should return 200 and return all plot", async () => {
+        await request(app)
+        .post("/plot/all")
+        .expect(200)
+        .expect( response => {
+            expect(response.body[0].codeName).toEqual("fbfff392-c69f-4d0e-aea6-26517ce7563a")
+        })
+    })
 })

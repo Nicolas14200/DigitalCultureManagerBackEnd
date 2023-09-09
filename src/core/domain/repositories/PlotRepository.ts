@@ -6,4 +6,5 @@ export interface PlotRepository {
     getById(id: string) : Promise <Plot>;
     getByCodeName(codeName: string): Promise<Plot>;
     delete(id: string):Promise<void>;
+    getAll():Promise<Plot[]>;
 } 

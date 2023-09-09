@@ -9,8 +9,18 @@ import { PlotError } from '../../../core/domain/models/errors/PlotError';
 @injectable()
 export class MongoDbPlotRepository implements PlotRepository {
 
+
     private mongoDbPlotMapper: MongoDbPlotMapper = new MongoDbPlotMapper()
     
+
+    async getAll(): Promise<Plot[]> {
+        const allPlot: MongoDbPlotMapperProps[] = await PlotModel.find()
+        return allPlot.map((plot: MongoDbPlotMapperProps)=> {
+            return this.mongoDbPlotMapper.toDomain(plot); 
+        });
+        
+    }
+
     async save(plot: Plot): Promise<Plot> {
 
         const plotModelmapped = this.mongoDbPlotMapper.fromDomain(plot);

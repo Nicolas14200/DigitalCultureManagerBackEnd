@@ -7,6 +7,11 @@ export class InMemoryPlotRepository implements PlotRepository {
     constructor(readonly plotMap: Map < string, Plot > ){
     }
     
+    async getAll(): Promise<Plot[]> {
+        const plots: Plot[] = Array.from(this.plotMap.values());
+        return plots;
+    }
+    
     async getById(id: string): Promise<Plot> {
             const plot: Plot = this.plotMap.get(id)
             if (!plot) {

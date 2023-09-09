@@ -6,28 +6,33 @@ import { Usecase } from "../Usecase";
 import { inject, injectable } from "inversify";
 import { DCMIdentifiers } from "../DCMIdentifiers";
 
-export interface SignInProps{
-    email: string,
-    password: string
+export interface SignInProps {
+  email: string;
+  password: string;
 }
 @injectable()
 export class SignIn implements Usecase<SignInProps, User> {
+  constructor(
+    @inject(DCMIdentifiers.userRepository)
+    private userRepository: UserRepository,
+    @inject(DCMIdentifiers.passwordGateway)
+    private passwordGateway: PasswordGateway
+  ) {}
 
-    constructor(
-        @inject(DCMIdentifiers.userRepository)
-        private userRepository : UserRepository, 
-        @inject(DCMIdentifiers.passwordGateway)
-        private passwordGateway: PasswordGateway) {}
+  async execute(payload: SignInProps) {
+    try {
+      const user = await this.userRepository.getByEmail(payload.email);
 
-    async execute(payload: SignInProps) {
-        const user = await this.userRepository.getByEmail(payload.email);
-        if (!user){
-            throw new Error("USER_NOT_FOUND");
-        }
-        const passwordCheck = await this.passwordGateway.comparePassword(payload.password, user.props.password);
-        if (passwordCheck) {
-            return user;
-        }
-        throw new AuthenticationError.SignInFailed("SIGNIN_FAILED")
+      const passwordCheck = await this.passwordGateway.comparePassword(
+        payload.password,
+        user.props.password
+      );
+      
+      if (passwordCheck) {
+        return user;
+      }  
+    } catch (e) {
+        throw new AuthenticationError.SignInFailed("SIGNIN_FAILED");
     }
+  }
 }

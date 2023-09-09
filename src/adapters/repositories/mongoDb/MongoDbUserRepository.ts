@@ -12,6 +12,9 @@ export class MongoDbUserRepository implements UserRepository {
     private mongoDbUserMappper: MongoDbUserMappper = new MongoDbUserMappper();
 
     async save(user: User): Promise<User> {
+        if(!user.props.email || !user.props.name){
+            throw new UserError.MissingInformation("MISSING INFORATION")
+        }
         await UserModel.findOneAndUpdate(
             {
                 id: user.props.id

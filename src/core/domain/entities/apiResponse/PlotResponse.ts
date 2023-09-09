@@ -2,6 +2,7 @@ import { Series } from "../../../../core/domain/valueObjects/Series";
 import { StarsLevel } from "../../../../core/domain/valueObjects/StarsLevel";
 
 export interface PlotResponse {
+    id:string;
     name: string;
     codeName: string;
     width: number;

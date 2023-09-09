@@ -25,6 +25,9 @@ import { UpdateEventCulture } from "../../core/usecase/eventCulture/UpdateEventC
 import { AddSeriesToPlot } from "../../core/usecase/plot/AddSeriesToPlot";
 import { AddSubPlot } from "../../core/usecase/plot/AddSubPlot";
 import { JwtIdentityGateway } from "../../adapters/gateways/jwt/JwtIdentityGateway";
+import { SignIn } from '../../core/usecase/user/SignIn';
+import { AuthenticationMiddleware } from '../middlewares/AuthenticationMiddleware';
+import { GetAllPlot } from '../../core/usecase/plot/GetAllPlot';
 
 export class AppDependencies extends Container {
     init(){
@@ -33,8 +36,10 @@ export class AppDependencies extends Container {
         this.bind(DCMIdentifiers.eventCultureRepository).toConstantValue(new MongoDbEventCultureRepository())
         this.bind(DCMIdentifiers.plotRepository).toConstantValue(new MongoDbPlotRepository())
         this.bind(DCMIdentifiers.identityGateway).toConstantValue(new JwtIdentityGateway(process.env.JWT_KEY))
-
+        this.bind(AuthenticationMiddleware).toSelf()
+        
         this.bind(UserController).toSelf()
+        this.bind(SignIn).toSelf()
         this.bind(CreateUser).toSelf()
         this.bind(UpdateUser).toSelf()
         this.bind(GetUserById).toSelf()
@@ -45,6 +50,7 @@ export class AppDependencies extends Container {
         this.bind(UpdatePlot).toSelf()
         this.bind(DeletePlot).toSelf()
         this.bind(GetPlotById).toSelf()
+        this.bind(GetAllPlot).toSelf()
         this.bind(AddSeriesToPlot).toSelf()
         this.bind(AddSubPlot).toSelf()
 

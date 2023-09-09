@@ -15,6 +15,7 @@ import { AddSubPlotCommand } from "./commands/AddSubPlotCommand";
 import { AddSubPlot } from "../../../core/usecase/plot/AddSubPlot";
 import { MongoDbPlotRepository } from "../../../adapters/repositories/mongoDb/MongoDbPlotRepository";
 import { DCMIdentifiers } from "../../../core/usecase/DCMIdentifiers";
+import { GetAllPlot } from "../../../core/usecase/plot/GetAllPlot";
 
 @JsonController("/plot")
 @injectable()
@@ -29,8 +30,25 @@ export class PlotController {
     private readonly _addSeriesToPlot: AddSeriesToPlot,
     private readonly _addSubPlot: AddSubPlot,
     @inject(DCMIdentifiers.plotRepository)
-    private readonly _plotRepo: MongoDbPlotRepository
+    private readonly _plotRepo: MongoDbPlotRepository,
+    private readonly _getAllPlot: GetAllPlot
   ) {}
+
+  @Get("/")
+  async plot(   
+    @Req() request: Request, 
+    @Res() response: Response,
+  ) {
+    try{
+      
+      return response.statusCode = 200;
+    }
+    catch(e){
+      return response.status(400).send({
+        message: e.message,
+      });
+    }
+  }
 
   @Post("/create")
   async createPlot(
@@ -48,7 +66,6 @@ export class PlotController {
         plank: cmd.plank,
       };
       const plot = await this._createPlot.execute(payload);
-      
       return response.status(201).send({
         ...this.plotApiResponseMapper.fromDomain(plot),
       });
@@ -138,6 +155,22 @@ export class PlotController {
         message: e.message,
       });
     }
+  }
+  @Post("/all")
+  async getAllPlot(
+    @Res() response: Response,
+    @Req() request: Request,
+  ){
+    try{
+      const allPlot = await this._getAllPlot.execute();
 
+      return response.status(200).send(allPlot.map((plot)=> {
+        return this.plotApiResponseMapper.fromDomain(plot)
+      }));
+    }catch(e){
+      return response.status(400).send({
+        message: e.message,
+      });
+    }
   }
 }

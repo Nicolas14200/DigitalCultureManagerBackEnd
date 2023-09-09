@@ -17,11 +17,11 @@ export class CreatePlotCommand {
 
     @IsNumber()
     ph: number;
-
-    @IsNumber()
-    plank: number;
     
     @IsNumber()
     pebbles: StarsLevel;
+
+    @IsNumber()
+    plank: number;
 
 }
